@@ -1,9 +1,7 @@
 # 🌾 RotaShift
 
 
-Crop-rotation planning for farmers whose season no longer arrives on time. Measures how far the growing window has moved from 22 years of NASA rainfall data, then shows which rotations survive that shift while improving the soil. NASA Space Apps 2026, Challenge 7.
-
-**Don't ask when the water comes. Ask how late it can come before your plan breaks.**
+Crop-rotation planning for farmers whose season no longer arrives on time. Measures how far the growing window has moved from 22 years of NASA rainfall data, then shows which rotations survive that shift while improving the soil. 
 
 A decision-support tool for farmers whose growing season no longer arrives on time.
 Built for the **NASA Space Apps Challenge 2026 — Challenge 7: Field Shift: Adapting Farms with NASA Data.**
