@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>RotaShift — Climate-ready crop planning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#18352f;--muted:#74857d;--faint:#95a39a;--line:#e3e9e2;--line2:#eef2ec;--paper:#f6f7f2;--card:#fff;
+--green:#267353;--lime:#d6ed73;--red:#cf6650;--amber:#9a6b20;--sand:#b8892e;
+--shadow:0 1px 2px #203c2808,0 8px 26px #203c2810;--lift:0 4px 10px #203c2810,0 16px 40px #203c2818;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--ink:#e8efe9;--muted:#9bab a2;--muted:#9babA2;--faint:#7d8d84;--line:#2b3a34;--line2:#243029;--paper:#121a17;--card:#1a241f;
+--green:#7fc39a;--lime:#d6ed73;--red:#e08c73;--amber:#d8ab5e;--sand:#d8ab5e;
+--shadow:0 1px 2px #0005,0 8px 26px #0004;--lift:0 4px 10px #0005,0 16px 40px #0006}}
+:root[data-theme=dark]{--ink:#e8efe9;--muted:#9babA2;--faint:#7d8d84;--line:#2b3a34;--line2:#243029;--paper:#121a17;--card:#1a241f;
+--green:#7fc39a;--lime:#d6ed73;--red:#e08c73;--amber:#d8ab5e;--sand:#d8ab5e;
+--shadow:0 1px 2px #0005,0 8px 26px #0004;--lift:0 4px 10px #0005,0 16px 40px #0006}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.6 'DM Sans',system-ui,sans-serif}
+.mono,.navlabel{font-family:'DM Mono',monospace}
+h1,h2,h3,.mn{font-family:Manrope,sans-serif;margin:0}
+.app{max-width:1512px;margin:auto;min-height:100vh;display:grid;grid-template-columns:225px 1fr}
+
+/* sidebar */
+.sidebar{background:var(--card);border-right:1px solid var(--line);padding:25px 16px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;z-index:20}
+.brand{font:800 20px Manrope,sans-serif;padding:0 9px 30px;letter-spacing:-.8px;display:flex;align-items:center}
+.mark{display:inline-grid;place-items:center;background:var(--green);color:var(--lime);width:33px;height:33px;border-radius:11px;margin-right:9px;font-size:16px;transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+.brand:hover .mark{transform:rotate(-12deg) scale(1.08)}
+.navlabel{font-size:10px;color:var(--faint);letter-spacing:1px;text-transform:uppercase;padding:0 10px;margin-bottom:8px}
+.nav{display:grid;gap:4px}
+.nav a{position:relative;padding:10px 12px;color:var(--muted);text-decoration:none;border-radius:9px;font-size:13px;transition:background .18s,color .18s,padding-left .18s;display:flex;align-items:center;gap:9px}
+.nav a:hover{background:var(--line2);color:var(--ink);padding-left:16px}
+.nav a.active{background:color-mix(in srgb,var(--green) 14%,transparent);color:var(--green);font-weight:700}
+.nav a.active::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:0 3px 3px 0;background:var(--green)}
+.nav a i{font-style:normal;opacity:.75;font-size:12px}
+.sidebottom{margin-top:auto}
+.region{border:1px solid var(--line);border-radius:12px;padding:13px;margin:12px 2px 14px;font-size:11px;color:var(--muted);transition:border-color .2s,box-shadow .2s}
+.region:hover{border-color:var(--green);box-shadow:var(--shadow)}
+.region b{display:block;font:700 12.5px Manrope,sans-serif;color:var(--ink);margin:6px 0 3px;letter-spacing:-.2px}
+.profile{border-top:1px solid var(--line);padding:13px 4px 0;font-size:11px;color:var(--faint);line-height:1.5}
+
+/* main */
+.main{max-width:1280px;width:100%;padding:25px 38px 45px;margin:auto}
+.topbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:26px;font-size:12px;color:var(--muted)}
+.topbar b{color:var(--ink)}
+.demo{background:color-mix(in srgb,var(--sand) 16%,transparent);border:1px solid color-mix(in srgb,var(--sand) 38%,transparent);border-radius:20px;padding:6px 11px;color:var(--amber);font:10px 'DM Mono',monospace;letter-spacing:.06em}
+.share{margin-left:auto;background:transparent;border:1px solid var(--line);border-radius:20px;padding:7px 14px;font:600 12px 'DM Sans';color:var(--muted);cursor:pointer;transition:.2s}
+.share:hover{border-color:var(--green);color:var(--green);transform:translateY(-1px)}
+
+.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:22px;flex-wrap:wrap;margin-bottom:20px}
+.eyebrow{font:10px 'DM Mono',monospace;letter-spacing:1.2px;color:var(--green);text-transform:uppercase}
+.hero h1{font:800 clamp(28px,3.3vw,42px)/1.1 Manrope,sans-serif;letter-spacing:-1.8px;margin:10px 0 8px}
+.hero p{color:var(--muted);font-size:13px;margin:0;max-width:56ch}
+.heroside{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.select{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 13px;color:var(--ink);font:inherit;font-size:13px;cursor:pointer;transition:.2s}
+.select:hover{border-color:var(--green)}
+.select:focus{outline:0;border-color:var(--green);box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 18%,transparent)}
+.cta{background:var(--green);color:#fff;border:0;border-radius:10px;padding:11px 18px;font:700 13px 'DM Sans';cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:.22s;box-shadow:var(--shadow)}
+.cta:hover{transform:translateY(-2px);box-shadow:var(--lift)}
+.cta span{transition:transform .25s}
+.cta:hover span{transform:translateY(3px)}
+
+.alert{display:flex;align-items:center;gap:13px;flex-wrap:wrap;background:color-mix(in srgb,var(--green) 10%,var(--card));border:1px solid color-mix(in srgb,var(--green) 24%,var(--line));border-radius:12px;padding:13px 16px;margin-bottom:17px}
+.alerticon{background:color-mix(in srgb,var(--green) 20%,transparent);border-radius:9px;padding:8px 10px;color:var(--green);font-size:14px}
+.alertcopy{flex:1;min-width:220px;font-size:12.5px;color:var(--muted);line-height:1.6}
+.alertcopy b{color:var(--ink)}
+.alertstat{font:10px 'DM Mono',monospace;color:var(--green);white-space:nowrap;letter-spacing:.05em}
+
+/* cards */
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:15px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);padding:19px;min-width:0;transition:box-shadow .3s,transform .3s,border-color .3s}
+.card:hover{box-shadow:var(--lift);border-color:color-mix(in srgb,var(--green) 22%,var(--line))}
+.cardhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.card h2{font:700 15px Manrope,sans-serif;letter-spacing:-.3px}
+.sub{color:var(--muted);font-size:11.5px;margin:3px 0 0}
+.tag{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:6px 10px;font:9px 'DM Mono',monospace;color:var(--faint);white-space:nowrap;letter-spacing:.07em}
+.chart{display:block;width:100%;height:auto}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:12px}
+.stat{border-top:1px solid var(--line);padding:11px 4px 0}
+.stat b{font:700 20px Manrope,sans-serif;letter-spacing:-.6px;display:block}
+.stat b.q{font-size:14px;color:var(--faint)}
+.stat span{display:block;color:var(--muted);font-size:10px;margin-top:3px;line-height:1.45}
+.stat em{font-style:normal;display:block;font:9px 'DM Mono',monospace;color:var(--faint);margin-top:5px}
+.stat.sig b{color:var(--green)}.stat.warn b{color:var(--red)}
+/* field inputs */
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.fi{display:grid;gap:5px;min-width:0}
+.fi label{font:9.5px 'DM Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.fi input,.fi select{font:inherit;font-size:13px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:9px 11px;width:100%;transition:.2s}
+.fi input:hover,.fi select:hover{border-color:var(--green)}
+.fi input:focus,.fi select:focus{outline:0;border-color:var(--green);box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 16%,transparent)}
+.youare{margin-top:13px;padding:12px 14px;border-radius:11px;background:color-mix(in srgb,var(--green) 9%,transparent);border:1px solid color-mix(in srgb,var(--green) 22%,transparent);font-size:12.5px;line-height:1.6}
+
+/* priorities */
+.presets{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.pb{font:600 11.5px 'DM Sans';padding:7px 12px;border-radius:20px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:.2s}
+.pb:hover{border-color:var(--green);color:var(--green);transform:translateY(-1px)}
+.pb.on{background:var(--green);border-color:var(--green);color:#fff}
+.priorities{display:grid;gap:13px;margin:4px 0 0}
+.range{display:grid;grid-template-columns:78px 1fr 26px;gap:10px;align-items:center;font-size:11.5px}
+.range output{font:10px 'DM Mono',monospace;color:var(--green);text-align:right}
+.range input{appearance:none;-webkit-appearance:none;width:100%;height:4px;border-radius:9px;background:var(--line);cursor:pointer}
+.range input::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border:3px solid var(--green);background:var(--card);border-radius:50%;box-sizing:border-box;transition:transform .15s}
+.range input::-moz-range-thumb{width:14px;height:14px;border:3px solid var(--green);background:var(--card);border-radius:50%;box-sizing:border-box}
+.range input:hover::-webkit-slider-thumb{transform:scale(1.2)}
+.range input:focus{outline:0}
+.range input:focus::-webkit-slider-thumb{box-shadow:0 0 0 4px color-mix(in srgb,var(--green) 20%,transparent)}
+.note{border-top:1px solid var(--line);padding-top:10px;margin-top:14px;color:var(--faint);font-size:10px}
+
+/* rotations */
+.rotationcard,.sim,.scenario,.methods,.fieldcard{margin-top:15px}
+.rotationhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:13px}
+.rotations{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:10px}
+.rotation{border:1px solid var(--line);border-radius:12px;padding:13px;position:relative;background:var(--card);transition:transform .3s cubic-bezier(.22,.7,.3,1),border-color .25s,box-shadow .25s,background .25s;cursor:default}
+.rotation:hover{transform:translateY(-4px);border-color:var(--green);box-shadow:var(--lift)}
+.rotation.mine{border-color:var(--green);box-shadow:inset 3px 0 0 var(--green)}
+.rotation.brk{border-color:var(--red);background:color-mix(in srgb,var(--red) 7%,var(--card))}
+.rotation.brk:hover{border-color:var(--red)}
+.rank{position:absolute;right:12px;top:12px;color:var(--faint);font:10px 'DM Mono',monospace}
+.rotation h3{font:700 12.5px Manrope,sans-serif;margin:5px 22px 4px 0;line-height:1.3;letter-spacing:-.2px}
+.crops{font-size:10px;color:var(--muted);min-height:26px;line-height:1.5}
+.margin{margin:10px 0 2px}
+.margin b{font:700 23px Manrope,sans-serif;letter-spacing:-.8px;color:var(--green)}
+.rotation.brk .margin b{color:var(--red)}
+.margin span{color:var(--muted);font-size:10px}
+.barlabel{display:flex;justify-content:space-between;color:var(--faint);font:9px 'DM Mono',monospace;margin:8px 0 4px}
+.bar,.track{height:5px;border-radius:8px;background:var(--line2);overflow:hidden}
+.bar i,.track i{height:100%;display:block;background:var(--green);border-radius:8px;transition:width .45s cubic-bezier(.22,.7,.3,1)}
+.bar.soil i{background:var(--sand)}
+.risk{font:9px 'DM Mono',monospace;border-radius:20px;padding:5px 8px;display:inline-block;margin-top:9px;letter-spacing:.05em}
+.low{color:var(--green);background:color-mix(in srgb,var(--green) 14%,transparent)}
+.med{color:var(--amber);background:color-mix(in srgb,var(--sand) 17%,transparent)}
+.high{color:var(--red);background:color-mix(in srgb,var(--red) 12%,transparent)}
+.yours{color:var(--green);background:color-mix(in srgb,var(--green) 14%,transparent);margin-left:5px}
+
+/* simulator */
+.simlayout{display:grid;grid-template-columns:1fr 190px;gap:24px;align-items:center}
+.simrange{appearance:none;-webkit-appearance:none;width:100%;height:6px;border-radius:9px;background:linear-gradient(90deg,color-mix(in srgb,var(--green) 40%,transparent),var(--line2) 46%,color-mix(in srgb,var(--red) 42%,transparent));margin:18px 0 10px;cursor:pointer}
+.simrange::-webkit-slider-thumb{-webkit-appearance:none;width:19px;height:19px;border:3px solid #fff;border-radius:50%;background:var(--green);box-shadow:0 0 0 1px var(--green),0 2px 8px #0003;transition:transform .15s}
+.simrange::-moz-range-thumb{width:19px;height:19px;border:3px solid #fff;border-radius:50%;background:var(--green)}
+.simrange:hover::-webkit-slider-thumb{transform:scale(1.15)}
+.simrange:focus{outline:0}
+.scale{display:flex;justify-content:space-between;font:9px 'DM Mono',monospace;color:var(--faint)}
+.simval{font:800 34px Manrope,sans-serif;letter-spacing:-1.4px;color:var(--green);transition:color .25s}
+.simval.hot{color:var(--red)}
+.simnote{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5}
+.simitems{display:grid;gap:7px;margin-top:14px}
+.simitem{display:grid;grid-template-columns:1fr 96px 86px;gap:11px;align-items:center;font-size:11.5px;padding:8px 11px;border:1px solid var(--line2);border-radius:9px;transition:border-color .25s,background .25s}
+.simitem:hover{border-color:var(--line)}
+.simitem.out{background:color-mix(in srgb,var(--red) 5%,transparent)}
+.state{font:9px 'DM Mono',monospace;text-align:right;letter-spacing:.05em}
+.state.hold{color:var(--green)}.state.break{color:var(--red)}
+
+/* scenario */
+.scenario-title{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:13px}
+.scen{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.sc{border:1px solid var(--line);border-radius:12px;padding:14px;transition:.25s}
+.sc:hover{box-shadow:var(--shadow)}
+.sc.bad{border-color:color-mix(in srgb,var(--red) 35%,var(--line))}
+.sc.good{border-color:color-mix(in srgb,var(--green) 38%,var(--line))}
+.sc h3{font:700 13px Manrope,sans-serif;letter-spacing:-.2px}
+.sc .st2{font:9px 'DM Mono',monospace;color:var(--faint);margin:3px 0 10px;letter-spacing:.06em}
+.year{display:grid;grid-template-columns:54px 1fr 50px;gap:9px;align-items:center;padding:8px 0;border-top:1px solid var(--line2);font-size:11.5px}
+.yearnum{font:9px 'DM Mono',monospace;color:var(--faint)}
+.yield{font:10px 'DM Mono',monospace;text-align:right}
+.yield.bad{color:var(--red)}.yield.ok{color:var(--green)}
+
+/* methods */
+.meth{display:grid;grid-template-columns:repeat(auto-fit,minmax(192px,1fr));gap:11px}
+.me{border:1px solid var(--line);border-radius:12px;padding:14px;transition:.25s}
+.me:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:var(--shadow)}
+.me h3{font:700 12.5px Manrope,sans-serif;margin-bottom:6px;letter-spacing:-.2px}
+.me p{margin:0;font-size:11.5px;color:var(--muted);line-height:1.55}
+.bdg{display:inline-block;margin-top:10px;font:8.5px 'DM Mono',monospace;letter-spacing:.07em;border-radius:20px;padding:4px 8px}
+.bdg.obs{color:var(--green);background:color-mix(in srgb,var(--green) 13%,transparent)}
+.bdg.ctx{color:var(--amber);background:color-mix(in srgb,var(--sand) 15%,transparent)}
+.bdg.no{color:var(--red);background:color-mix(in srgb,var(--red) 11%,transparent)}
+.bdg.sim{color:var(--muted);background:var(--line2)}
+
+.footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:22px;padding-top:16px;border-top:1px solid var(--line);font:9.5px 'DM Mono',monospace;color:var(--faint);letter-spacing:.06em}
+
+/* toast + reveal */
+#toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:var(--ink);color:var(--paper);padding:11px 18px;border-radius:10px;font-size:12.5px;opacity:0;pointer-events:none;transition:.3s;z-index:60;box-shadow:var(--lift)}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,.7,.3,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.rv{opacity:1;transform:none}}
+@media (max-width:1040px){.grid,.simlayout,.scen{grid-template-columns:1fr}}
+@media (max-width:860px){
+ .app{grid-template-columns:1fr}
+ .sidebar{position:sticky;top:0;height:auto;flex-direction:row;align-items:center;overflow-x:auto;gap:8px;padding:12px 14px;border-right:0;border-bottom:1px solid var(--line)}
+ .brand{padding:0 12px 0 0;font-size:17px}
+ .navlabel,.sidebottom{display:none}
+ .nav{display:flex;gap:4px}.nav a{white-space:nowrap;padding:8px 11px}.nav a:hover{padding-left:11px}
+ .main{padding:20px 18px 40px}.stats{grid-template-columns:1fr}
+ .simitem{grid-template-columns:1fr 70px}
+}
+</style></head><body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><span class="mark">🌾</span>RotaShift</div>
+  <div class="navlabel">Workspace</div>
+  <nav class="nav">
+    <a href="#overview" class="active"><i>▦</i>Overview</a>
+    <a href="#field"><i>◱</i>Your field</a>
+    <a href="#shift"><i>⌁</i>Climate shift</a>
+    <a href="#rotations"><i>☷</i>Rotations</a>
+    <a href="#sim"><i>◇</i>Shift simulator</a>
+    <a href="#scenario"><i>⧉</i>Four-year view</a>
+    <a href="#methods"><i>⌖</i>Methods &amp; evidence</a>
+  </nav>
+  <div class="sidebottom">
+    <div class="region">
+      <span class="mono" style="font-size:9px;letter-spacing:1px;color:var(--faint)">ACTIVE FIELD</span>
+      <b id="sbHaor">Tanguar haor</b>
+      <span id="sbPlace">Tahirpur, Sunamganj · Boro season</span>
+    </div>
+    <div class="profile">◉&nbsp; Research demo · Space Apps 2026<br>Challenge 7 — Field Shift</div>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <span>Workspace &nbsp;/&nbsp; <b>Season outlook</b></span>
+    <span class="demo">● PROTOTYPE · DEMO DATA</span>
+    <button class="share" id="shareBtn">↗ Share</button>
+  </div>
+
+  <section id="overview" class="hero rv">
+    <div>
+      <div class="eyebrow">NASA Space Apps 2026 · Challenge 7 · Field Shift</div>
+      <h1>Climate-aware crop planning</h1>
+      <p>Make room for a changing season. Understand the shift. Stress-test a plan. Choose a rotation with room to adapt — four months before the water arrives, when the decision is still open.</p>
+    </div>
+    <div class="heroside">
+      <select class="select" id="fplace" title="Choose a field">
+        <option>Tahirpur</option><option>Dharmapasha</option><option>Jamalganj</option><option>Derai</option>
+      </select>
+      <a class="cta" href="#field">Try the prototype <span>↓</span></a>
+    </div>
+  </section>
+
+  <div class="alert rv">
+    <span class="alerticon">↗</span>
+    <div class="alertcopy"><b id="alertMain">Seasonal onset is trending earlier — and becoming less predictable.</b><br>Illustrative analysis for a representative haor farming zone, upstream catchment rainfall 2003–2025.</div>
+    <span class="alertstat" id="alertStat">−11 DAYS · ±3.4× VARIABILITY</span>
+  </div>
+
+  <div class="card fieldcard rv" id="field" style="margin-top:0">
+    <div class="cardhead">
+      <div><h2>Your field</h2><p class="sub">Tell us where it is and what you grow now — every number below is worked out for this field</p></div>
+      <span class="tag">STEP 01</span>
+    </div>
+    <div class="fields">
+      <div class="fi"><label for="fname">Your name</label><input id="fname" value="Abdul Karim"></div>
+      <div class="fi"><label for="fupa">Upazila</label><select id="fupa"><option>Tahirpur</option><option>Dharmapasha</option><option>Jamalganj</option><option>Derai</option></select></div>
+      <div class="fi"><label for="fsize">Field size</label><input id="fsize" value="1.2 hectare"></div>
+      <div class="fi"><label for="fsoil">Soil texture (SRDI)</label><select id="fsoil"><option>Clay loam</option><option>Silty clay</option><option>Sandy loam</option></select></div>
+      <div class="fi"><label for="fcur">What you grow now</label><select id="fcur"></select></div>
+    </div>
+    <div class="youare" id="youare"></div>
+  </div>
+
+  <div class="grid rv" id="shift" style="margin-top:15px">
+    <div class="card">
+      <div class="cardhead">
+        <div><h2>When does the rain arrive?</h2><p class="sub">Seasonal onset distributions · day of year · <span id="eraLbl">1998–2007 vs 2017–2026</span></p></div>
+        <span class="tag">STEP 02</span>
+      </div>
+      <svg class="chart" id="dist" viewBox="0 0 700 252" role="img" aria-label="Seasonal onset distributions, historical versus recent"></svg>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div class="card">
+      <div class="cardhead">
+        <div><h2>What matters most to you?</h2><p class="sub">Tune priorities to rerank rotations</p></div>
+        <span class="tag">YOUR PLAN</span>
+      </div>
+      <div class="presets">
+        <button class="pb" data-preset="safe">No bad years</button>
+        <button class="pb" data-preset="income">Most rice</button>
+        <button class="pb" data-preset="land">Better soil</button>
+        <button class="pb on" data-preset="even">Balanced</button>
+      </div>
+      <div class="priorities" id="prios"></div>
+      <div class="note">Weights reorder the demo ranking; they do not predict farm outcomes.</div>
+    </div>
+  </div>
+
+  <div class="card rotationcard rv" id="rotations">
+    <div class="rotationhead">
+      <div><h2>Rotations with room to adapt</h2><p class="sub">Ranked for your priorities · modeled across onset shifts</p></div>
+      <span class="tag" id="rotTag">5 CANDIDATES</span>
+    </div>
+    <div class="rotations" id="rots"></div>
+  </div>
+
+  <div class="card sim rv" id="sim">
+    <div class="cardhead">
+      <div><h2>How far can the season move?</h2><p class="sub">Stress-test crop windows against a hypothetical onset shift</p></div>
+      <span class="tag">WHAT-IF SIMULATION</span>
+    </div>
+    <div class="simlayout">
+      <div>
+        <input type="range" class="simrange" id="simr" min="-21" max="35" value="0" step="1">
+        <div class="scale"><span>← 21 days later</span><span>Current timing</span><span>35 days earlier →</span></div>
+        <div class="simitems" id="simitems"></div>
+      </div>
+      <div>
+        <div class="mono" style="font-size:9px;letter-spacing:1.1px;color:var(--faint)">SEASON SHIFT</div>
+        <div class="simval" id="simval">0 days</div>
+        <div class="simnote" id="simnote">Baseline timing · all windows hold</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card scenario rv" id="scenario">
+    <div class="scenario-title">
+      <div><h2>One four-year plan. Two ways forward.</h2><p class="sub">Illustrative scenarios · same starting conditions, same field</p></div>
+      <span class="tag">SCENARIO VIEW</span>
+    </div>
+    <div class="scen">
+      <div class="sc bad"><h3>Old calendar</h3><div class="st2">FIXED SEQUENCE · SAME DATE EVERY YEAR</div><div id="oldYears"></div></div>
+      <div class="sc good"><h3>Adaptive rotation</h3><div class="st2">WINDOW-AWARE SEQUENCE</div><div id="newYears"></div></div>
+    </div>
+  </div>
+
+  <div class="card methods rv" id="methods">
+    <div class="cardhead">
+      <div><h2>Methods &amp; evidence</h2><p class="sub">What informs a recommendation — and what remains a scenario</p></div>
+      <span class="tag">TRANSPARENT BY DESIGN</span>
+    </div>
+    <div class="meth">
+      <div class="me"><h3>NASA observation</h3><p>GPM IMERG daily precipitation over the upstream catchment, 2003–2025. Trend tested with Mann-Kendall and Sen's slope, corrected for autocorrelation. POWER supplies temperature and growing degree days.</p><span class="bdg obs">OBSERVED · DEMO VALUES</span></div>
+      <div class="me"><h3>Local constraints</h3><p>Crop duration, flood tolerance and water need from BRRI and BARI publications; soil texture class from SRDI. Cited rather than redistributed.</p><span class="bdg ctx">CONTEXT · PLACEHOLDER</span></div>
+      <div class="me"><h3>Forecast</h3><p>No live or seasonal forecast is connected in this prototype. Everything shown is derived from the historical record, never from a prediction of next season.</p><span class="bdg no">NOT CONNECTED</span></div>
+      <div class="me"><h3>Simulation</h3><p>The adaptation margin is an illustrative crop-window stress test. A planning aid, not an outcome prediction — it says when a plan stops fitting, not what it will yield.</p><span class="bdg sim">WHAT-IF · DEMO MODEL</span></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>ROTASHIFT · NASA SPACE APPS 2026 · CONCEPT PROTOTYPE</span>
+    <span>ILLUSTRATIVE DEMO DATA · NOT AN AGRONOMIC RECOMMENDATION</span>
+  </div>
+</main>
+</div>
+<div id="toast"></div>
+<script>
+const $=i=>document.getElementById(i);
+const PLACES={
+ Tahirpur:{haor:'Tanguar haor',then:{m:112,s:5.2},now:{m:101,s:17.9},ext:[31,39],p:[.03,.04,.01]},
+ Dharmapasha:{haor:'Chandra Sonar Thal',then:{m:114,s:6.0},now:{m:106,s:15.2},ext:[29,36],p:[.06,.03,.02]},
+ Jamalganj:{haor:'Pagner haor',then:{m:110,s:4.8},now:{m:97,s:19.4},ext:[33,42],p:[.01,.02,.01]},
+ Derai:{haor:'Shani haor',then:{m:116,s:5.6},now:{m:110,s:12.1},ext:[30,34],p:[.11,.08,.04]}};
+const ROTS=[
+ {id:'r1',n:'Long Boro, then fallow',c:'Boro BRRI dhan29 (165 d) → fallow',margin:9,bare:168,dir:'down',s:{yield:88,risk:25,soil:20,water:28,cost:72}},
+ {id:'r2',n:'Medium Boro → Aman',c:'Boro (148 d) → Aman rice (120 d)',margin:14,bare:96,dir:'down',s:{yield:92,risk:38,soil:35,water:25,cost:55}},
+ {id:'r3',n:'Short Boro → sesame',c:'Boro BRRI dhan28 (128 d) → sesame',margin:18,bare:118,dir:'flat',s:{yield:66,risk:62,soil:52,water:60,cost:64}},
+ {id:'r4',n:'Short Boro → mung bean',c:'Boro (128 d) → mung bean → fallow',margin:21,bare:102,dir:'up',s:{yield:71,risk:74,soil:78,water:68,cost:60}},
+ {id:'r5',n:'Resilient pulse mix',c:'Short Boro → mung bean → dhaincha',margin:26,bare:58,dir:'up',s:{yield:63,risk:86,soil:94,water:72,cost:48}}];
+const KEYS=[{k:'yield',l:'Yield'},{k:'risk',l:'Risk'},{k:'soil',l:'Soil health'},{k:'water',l:'Water'},{k:'cost',l:'Cost'}];
+const PRE={safe:{yield:25,risk:100,soil:55,water:45,cost:50},income:{yield:100,risk:25,soil:25,water:30,cost:40},land:{yield:35,risk:60,soil:100,water:80,cost:35},even:{yield:65,risk:80,soil:55,water:70,cost:45}};
+const DIR={up:'SOIL IMPROVES',flat:'SOIL HOLDS',down:'SOIL DEGRADES'},DC={up:'low',flat:'med',down:'high'};
+let W={...PRE.even},SHIFT=0,MINE='r1',PLACE='Tahirpur';
+const CUM=[0,31,59,90,120,151,181,212,243,273,304,334],MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const dayStr=d=>{let i=11;while(d<=CUM[i])i--;return (d-CUM[i])+' '+MON[i]};
+let tt;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),1900)}
+
+const fcur=$('fcur');
+ROTS.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.n;fcur.appendChild(o)});
+fcur.value=MINE;
+fcur.onchange=()=>{MINE=fcur.value;rots();you();toast('Current plan set to “'+ROTS.find(r=>r.id===MINE).n+'”')};
+$('fname').oninput=you;$('fsize').oninput=you;$('fsoil').onchange=()=>{you();toast('Soil texture updated — erosion weighting recalculated')};
+function setPlace(v,src){PLACE=v;$('fupa').value=v;$('fplace').value=v;all();toast('Switched to '+PLACES[v].haor+' · '+v)}
+$('fupa').onchange=e=>setPlace(e.target.value);
+$('fplace').onchange=e=>setPlace(e.target.value);
+
+const pr=$('prios');
+KEYS.forEach(({k,l})=>{const d=document.createElement('div');d.className='range';
+ d.innerHTML='<span>'+l+'</span><input type="range" id="w_'+k+'" min="0" max="100" step="5" value="'+W[k]+'"><output id="o_'+k+'">'+W[k]+'</output>';
+ pr.appendChild(d);
+ d.querySelector('input').oninput=e=>{W[k]=+e.target.value;$('o_'+k).value=W[k];document.querySelectorAll('.pb').forEach(b=>b.classList.remove('on'));rots()}});
+document.querySelectorAll('.pb').forEach(b=>b.onclick=()=>{W={...PRE[b.dataset.preset]};
+ document.querySelectorAll('.pb').forEach(x=>x.classList.toggle('on',x===b));
+ KEYS.forEach(({k})=>{$('w_'+k).value=W[k];$('o_'+k).value=W[k]});rots();toast('Ranking updated for “'+b.textContent+'”')});
+$('simr').oninput=e=>{SHIFT=+e.target.value;rots();sim()};
+$('shareBtn').onclick=()=>{const u=location.href;(navigator.clipboard?navigator.clipboard.writeText(u):0);toast('Link copied to clipboard')};
+
+function you(){const nm=$('fname').value.trim()||'You',sz=$('fsize').value.trim(),so=$('fsoil').value,
+ r=ROTS.find(x=>x.id===MINE),p=PLACES[PLACE],sw=Math.round(p.now.s);
+ $('youare').innerHTML='<b>'+nm+'</b> · '+sz+' of '+so.toLowerCase()+' in '+PLACE+', growing <b>'+r.n.toLowerCase()+'</b>. This plan holds if the water arrives up to <b>'+r.margin+' days</b> early. The onset date in this area now swings about <b>±'+sw+' days</b> — '+(r.margin>=sw?'your plan sits inside that swing.':'<b>narrower than the swing</b>, so some years it will not hold.')}
+function place(){const p=PLACES[PLACE];$('sbHaor').textContent=p.haor;$('sbPlace').textContent=PLACE+', Sunamganj · Boro season';
+ const sh=Math.round(p.then.m-p.now.m),rat=(p.now.s/p.then.s).toFixed(1),ok=p.p[0]<.05;
+ $('alertStat').textContent=(ok?'−'+sh+' DAYS':'NO CLEAR SHIFT')+' · ±'+rat+'× VARIABILITY';
+ $('alertMain').textContent=ok?'Seasonal onset is trending earlier — and becoming less predictable.'
+  :'Onset timing shows no statistically clear trend here — but the date has become much harder to predict.'}
+function stats(){const p=PLACES[PLACE],sh=Math.round(p.then.m-p.now.m),st=Math.round(p.then.s),sn=Math.round(p.now.s),
+ rat=(p.now.s/p.then.s).toFixed(1),ok=v=>v<.05,f=v=>(ok(v)?'significant':'NOT significant');
+ $('stats').innerHTML=
+ '<div class="stat '+(ok(p.p[0])?'sig':'')+'"><b class="'+(ok(p.p[0])?'':'q')+'">'+(ok(p.p[0])?'−'+sh+'d':'no clear shift')+'</b><span>median onset shift · earlier</span><em>Mann-Kendall p='+p.p[0].toFixed(2)+' · '+f(p.p[0])+'</em></div>'+
+ '<div class="stat '+(ok(p.p[2])?'warn':'')+'"><b class="'+(ok(p.p[2])?'':'q')+'">'+rat+'×</b><span>onset variability · wider (±'+st+'d → ±'+sn+'d)</span><em>Levene test p='+p.p[2].toFixed(2)+' · '+f(p.p[2])+'</em></div>'+
+ '<div class="stat '+(ok(p.p[1])?'sig':'')+'"><b class="'+(ok(p.p[1])?'':'q')+'">+'+(p.ext[1]-p.ext[0])+'%</b><span>rain in heaviest 10% · more intense</span><em>Sen slope p='+p.p[1].toFixed(2)+' · '+f(p.p[1])+'</em></div>'}
+function chart(){const p=PLACES[PLACE],W_=700,H=252,L=42,R=16,T=22,B=40,x0=75,x1=148;
+ const px=d=>L+(d-x0)/(x1-x0)*(W_-L-R),g=(x,m,s)=>Math.exp(-.5*Math.pow((x-m)/s,2))/(s*Math.sqrt(2*Math.PI));
+ const pk=g(p.then.m,p.then.m,p.then.s),py=v=>H-B-(v/pk)*(H-T-B)*.86;
+ const pa=(m,s)=>{let q='';for(let d=x0;d<=x1;d+=.5)q+=(q?'L':'M')+px(d).toFixed(1)+','+py(g(d,m,s)).toFixed(1);return q};
+ const ar=(m,s)=>pa(m,s)+'L'+px(x1)+','+(H-B)+'L'+px(x0)+','+(H-B)+'Z';
+ let o='';
+ ['High','Mid','Low'].forEach((t,i)=>{const y=T+i*((H-T-B)/3);o+='<line x1="'+L+'" y1="'+y+'" x2="'+(W_-R)+'" y2="'+y+'" stroke="var(--line2)"/><text x="6" y="'+(y+4)+'" font-family="DM Mono,monospace" font-size="9" fill="var(--faint)">'+t+'</text>'});
+ o+='<line x1="'+L+'" y1="'+(H-B)+'" x2="'+(W_-R)+'" y2="'+(H-B)+'" stroke="var(--line)"/><text x="6" y="'+(H-B+4)+'" font-family="DM Mono,monospace" font-size="9" fill="var(--faint)">0</text>';
+ [[91,'Apr 1'],[105,'Apr 15'],[121,'May 1'],[135,'May 15']].forEach(t=>{o+='<text x="'+px(t[0])+'" y="'+(H-B+19)+'" text-anchor="middle" font-family="DM Mono,monospace" font-size="9.5" fill="var(--faint)">'+t[1]+'</text>'});
+ o+='<path d="'+ar(p.then.m,p.then.s)+'" fill="var(--muted)" opacity=".12"/><path d="'+ar(p.now.m,p.now.s)+'" fill="var(--red)" opacity=".13"/>';
+ o+='<path class="ln" d="'+pa(p.then.m,p.then.s)+'" fill="none" stroke="var(--muted)" stroke-width="2.3"/>';
+ o+='<path class="ln" d="'+pa(p.now.m,p.now.s)+'" fill="none" stroke="var(--red)" stroke-width="2.3"/>';
+ o+='<line x1="'+px(p.then.m)+'" y1="'+py(pk)+'" x2="'+px(p.then.m)+'" y2="'+(H-B)+'" stroke="var(--muted)" stroke-dasharray="3 3"/>';
+ o+='<line x1="'+px(p.now.m)+'" y1="'+py(g(p.now.m,p.now.m,p.now.s))+'" x2="'+px(p.now.m)+'" y2="'+(H-B)+'" stroke="var(--red)" stroke-dasharray="3 3"/>';
+ const sh=Math.round(p.then.m-p.now.m);
+ if(sh>0){const mid=(px(p.then.m)+px(p.now.m))/2;o+='<text x="'+mid+'" y="'+(T-6)+'" text-anchor="middle" font-family="DM Mono,monospace" font-size="9.5" fill="var(--red)">'+sh+' days earlier</text>'+
+  '<line x1="'+px(p.now.m)+'" y1="'+(T-2)+'" x2="'+px(p.then.m)+'" y2="'+(T-2)+'" stroke="var(--red)" stroke-width="1" opacity=".5"/>'}
+ o+='<text x="'+(W_-R)+'" y="'+(T-6)+'" text-anchor="end" font-family="DM Mono,monospace" font-size="9" fill="var(--faint)">SEASONAL RAIN ONSET</text>';
+ $('dist').innerHTML=o;
+ $('dist').querySelectorAll('.ln').forEach(p2=>{const L2=p2.getTotalLength();p2.style.strokeDasharray=L2;p2.style.strokeDashoffset=L2;p2.getBoundingClientRect();p2.style.transition='stroke-dashoffset 1.1s cubic-bezier(.22,.7,.3,1)';p2.style.strokeDashoffset=0});
+ $('eraLbl').textContent='1998–2007 (usually '+dayStr(Math.round(p.then.m))+') vs 2017–2026 (usually '+dayStr(Math.round(p.now.m))+')'}
+const sc=r=>{let n=0,d=0;KEYS.forEach(({k})=>{n+=(k==='risk'?r.s.risk:r.s[k])*W[k];d+=W[k]});return d?n/d:0};
+function rots(){const h=$('rots'),was=new Map();
+ h.querySelectorAll('.rotation').forEach(e=>was.set(e.dataset.id,e.getBoundingClientRect()));
+ const ord=[...ROTS].sort((a,b)=>{const A=a.margin>=SHIFT,B=b.margin>=SHIFT;if(A!==B)return A?-1:1;return sc(b)-sc(a)});
+ h.innerHTML=ord.map((r,i)=>{const br=r.margin<SHIFT,rk=r.s.risk>=75?'low':r.s.risk>=50?'med':'high',rt=r.s.risk>=75?'LOW':r.s.risk>=50?'MODERATE':'ELEVATED';
+  return '<article class="rotation'+(br?' brk':'')+(r.id===MINE?' mine':'')+'" data-id="'+r.id+'"><span class="rank">#0'+(i+1)+'</span>'+
+  '<h3>'+r.n+'</h3><div class="crops">'+r.c+'</div>'+
+  '<div class="margin"><b>'+(br?'✕':r.margin)+'</b> <span>'+(br?'fails at +'+r.margin+'d':'day margin')+'</span></div>'+
+  '<div class="barlabel"><span>SOIL TRAJECTORY</span><span>'+r.bare+' bare d/yr</span></div><div class="bar soil"><i style="width:'+r.s.soil+'%"></i></div>'+
+  '<div class="barlabel"><span>WATER FIT</span><span>'+r.s.water+'/100</span></div><div class="bar"><i style="width:'+r.s.water+'%"></i></div>'+
+  '<span class="risk '+DC[r.dir]+'">'+DIR[r.dir]+'</span><span class="risk '+rk+'">'+rt+' · weather risk</span>'+
+  (r.id===MINE?'<span class="risk yours">YOUR PLAN</span>':'')+'</article>'}).join('');
+ h.querySelectorAll('.rotation').forEach(e=>{const b=was.get(e.dataset.id);if(!b)return;const n=e.getBoundingClientRect(),dx=b.left-n.left,dy=b.top-n.top;
+  if(!dx&&!dy)return;e.style.transition='none';e.style.transform='translate('+dx+'px,'+dy+'px)';
+  requestAnimationFrame(()=>{e.style.transition='';e.style.transform=''})})}
+function sim(){const sw=Math.round(PLACES[PLACE].now.s),alive=ROTS.filter(r=>r.margin>=SHIFT).length,brk=ROTS.length-alive;
+ $('simval').textContent=(SHIFT>0?'+':'')+SHIFT+' days';$('simval').classList.toggle('hot',brk>0);
+ $('simnote').textContent=SHIFT<=0?'Baseline or later onset · all windows hold'
+  :(alive===0?'No window survives an onset this early.':brk+' rotation'+(brk===1?'':'s')+' cross'+(brk===1?'es':'')+' the break threshold. This area already swings ±'+sw+' days.');
+ $('simitems').innerHTML=ROTS.map(r=>{const rem=r.margin-SHIFT,h=rem>=0;
+  return '<div class="simitem'+(h?'':' out')+'"><span>'+r.n+'</span><div class="track"><i style="width:'+Math.max(5,Math.min(100,(rem+21)/56*100))+'%;background:'+(h?'var(--green)':'var(--red)')+'"></i></div><span class="state '+(h?'hold':'break')+'">'+(h?'HOLDS · '+rem+'d':'BREAKS')+'</span></div>'}).join('')}
+function years(id,rows){$(id).innerHTML=rows.map((r,i)=>'<div class="year"><span class="yearnum">YEAR 0'+(i+1)+'</span><span>'+r[0]+'</span><span class="yield '+(r[2]?'ok':'bad')+'">'+r[1]+'</span></div>').join('')}
+years('oldYears',[['Long Boro rice','100%',1],['Long Boro rice','94%',1],['Long Boro rice · flooded','61%',0],['Long Boro rice','79%',0]]);
+years('newYears',[['Short Boro → mung','96%',1],['Short Boro → dhaincha','94%',1],['Short Boro → mung','92%',1],['Short Boro → lentil','91%',1]]);
+function all(){place();stats();chart();rots();sim();you()}
+all();
+
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});
+document.querySelectorAll('.rv').forEach((e,i)=>{e.style.transitionDelay=(i*60)+'ms';io.observe(e)});
+/* scroll spy */
+const links=[...document.querySelectorAll('.nav a')],secs=links.map(a=>$(a.getAttribute('href').slice(1))).filter(Boolean);
+const sp=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>sp.observe(s));
+</script></body></html>
