@@ -178,6 +178,16 @@ h1,h2,h3,.mn{font-family:Manrope,sans-serif;margin:0}
 .bdg.no{color:var(--red);background:color-mix(in srgb,var(--red) 11%,transparent)}
 .bdg.sim{color:var(--muted);background:var(--line2)}
 
+.me a,.src a{color:var(--green);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--green) 35%,transparent);transition:.18s}
+.me a:hover,.src a:hover{border-bottom-color:var(--green);opacity:.75}
+.pid{font:9.5px 'DM Mono',monospace;color:var(--faint);display:block;margin-top:7px;letter-spacing:.04em;word-break:break-word}
+.srcs{display:grid;gap:9px}
+.src{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:baseline;padding:9px 0;border-top:1px solid var(--line2);font-size:11.5px}
+.src:first-child{border-top:0}
+.src b{font:700 11.5px Manrope,sans-serif;letter-spacing:-.1px}
+.src .r{color:var(--muted);line-height:1.5}
+.src .r em{font-style:normal;font-family:'DM Mono',monospace;font-size:9.5px;color:var(--faint);display:block;margin-top:3px}
+.legalbox{margin-top:14px;padding:12px 14px;border:1px solid var(--line);border-radius:11px;font-size:11px;color:var(--muted);line-height:1.6}
 .footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:22px;padding-top:16px;border-top:1px solid var(--line);font:9.5px 'DM Mono',monospace;color:var(--faint);letter-spacing:.06em}
 
 /* toast + reveal */
@@ -209,6 +219,7 @@ h1,h2,h3,.mn{font-family:Manrope,sans-serif;margin:0}
     <a href="#sim"><i>◇</i>Shift simulator</a>
     <a href="#scenario"><i>⧉</i>Four-year view</a>
     <a href="#methods"><i>⌖</i>Methods &amp; evidence</a>
+    <a href="#sources"><i>❏</i>Data sources</a>
   </nav>
   <div class="sidebottom">
     <div class="region">
@@ -331,16 +342,37 @@ h1,h2,h3,.mn{font-family:Manrope,sans-serif;margin:0}
       <span class="tag">TRANSPARENT BY DESIGN</span>
     </div>
     <div class="meth">
-      <div class="me"><h3>NASA observation</h3><p>GPM IMERG daily precipitation over the upstream catchment, 2003–2025. Trend tested with Mann-Kendall and Sen's slope, corrected for autocorrelation. POWER supplies temperature and growing degree days.</p><span class="bdg obs">OBSERVED · DEMO VALUES</span></div>
-      <div class="me"><h3>Local constraints</h3><p>Crop duration, flood tolerance and water need from BRRI and BARI publications; soil texture class from SRDI. Cited rather than redistributed.</p><span class="bdg ctx">CONTEXT · PLACEHOLDER</span></div>
+      <div class="me"><h3>NASA observation</h3><p>Precipitation from <a href="https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGDF_07/summary" target="_blank" rel="noopener">GPM IMERG Final Daily V07</a> over the upstream catchment, 1998–2025. Trend tested with Mann-Kendall and Sen's slope, corrected for autocorrelation. Temperature and growing degree days from <a href="https://power.larc.nasa.gov/" target="_blank" rel="noopener">NASA POWER</a>.<span class="pid">GPM_3IMERGDF_07 · 0.1° grid · GES DISC</span></p><span class="bdg obs">OBSERVED · DEMO VALUES</span></div>
+      <div class="me"><h3>Local constraints</h3><p>Crop duration, flood tolerance and water need from <a href="http://brri.gov.bd/" target="_blank" rel="noopener">BRRI</a> and <a href="http://bari.gov.bd/" target="_blank" rel="noopener">BARI</a> publications; soil texture class from <a href="http://srdi.gov.bd/" target="_blank" rel="noopener">SRDI</a>. Cited rather than redistributed — no third-party dataset is bundled in this repository.<span class="pid">BANGLADESH · NON-NASA CONTEXT</span></p><span class="bdg ctx">CONTEXT · PLACEHOLDER</span></div>
       <div class="me"><h3>Forecast</h3><p>No live or seasonal forecast is connected in this prototype. Everything shown is derived from the historical record, never from a prediction of next season.</p><span class="bdg no">NOT CONNECTED</span></div>
-      <div class="me"><h3>Simulation</h3><p>The adaptation margin is an illustrative crop-window stress test. A planning aid, not an outcome prediction — it says when a plan stops fitting, not what it will yield.</p><span class="bdg sim">WHAT-IF · DEMO MODEL</span></div>
+      <div class="me"><h3>Simulation</h3><p>The adaptation margin is an illustrative crop-window stress test. A planning aid, not an outcome prediction — it says when a plan stops fitting, not what it will yield. Soil trajectory uses bare-ground days from <a href="https://www.earthdata.nasa.gov/data/catalog/lpcloud-hlsl30-2.0" target="_blank" rel="noopener">HLS</a> NDVI.<span class="pid">HLSL30 / HLSS30 v2.0 · LP DAAC</span></p><span class="bdg sim">WHAT-IF · DEMO MODEL</span></div>
+    </div>
+  </div>
+
+
+  <div class="card rv" id="sources">
+    <div class="cardhead">
+      <div><h2>Data sources &amp; attribution</h2><p class="sub">Exact products, versions and identifiers behind every layer</p></div>
+      <span class="tag">ATTRIBUTION</span>
+    </div>
+    <div class="srcs">
+      <div class="src"><b>Precipitation</b><span class="r"><a href="https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGDF_07/summary" target="_blank" rel="noopener">NASA GPM IMERG Final Precipitation L3 Daily 0.1° V07</a> — onset date, extreme-rainfall intensity, onset variability<em>GPM_3IMERGDF_07 · NASA GES DISC · 0.1° (~10 km)</em></span></div>
+      <div class="src"><b>Agroclimatology</b><span class="r"><a href="https://power.larc.nasa.gov/" target="_blank" rel="noopener">NASA POWER</a> — temperature, growing degree days, solar radiation<em>~50 km grid — not used for onset detection at upazila scale</em></span></div>
+      <div class="src"><b>Soil moisture</b><span class="r"><a href="https://nsidc.org/data/spl3smp_e/versions/6" target="_blank" rel="noopener">NASA SMAP Enhanced L3 Radiometer Daily 9 km V006</a> — current-season conditions only<em>SPL3SMP_E · DOI 10.5067/M20OXIZHY3RJ · NSIDC DAAC · record begins 2015, too short for trend</em></span></div>
+      <div class="src"><b>Surface reflectance</b><span class="r"><a href="https://www.earthdata.nasa.gov/data/catalog/lpcloud-hlsl30-2.0" target="_blank" rel="noopener">NASA HLS Landsat OLI 30 m v2.0</a> and <a href="https://www.earthdata.nasa.gov/data/catalog/lpcloud-hlss30-2.0" target="_blank" rel="noopener">HLS Sentinel-2 MSI 30 m v2.0</a> — NDVI-derived bare-ground days<em>HLSL30 DOI 10.5067/HLS/HLSL30.002 · HLSS30 DOI 10.5067/HLS/HLSS30.002 · LP DAAC</em></span></div>
+      <div class="src"><b>Land surface temp</b><span class="r">NASA MODIS Land Surface Temperature — heat-stress detection<em>MOD11A2 · LP DAAC</em></span></div>
+      <div class="src"><b>Flood extent</b><span class="r"><a href="https://dataspace.copernicus.eu/" target="_blank" rel="noopener">ESA Copernicus Sentinel-1 SAR</a> — cloud-penetrating inundation mapping<em>Partner-agency data — not a NASA product</em></span></div>
+      <div class="src"><b>Crop &amp; soil</b><span class="r"><a href="http://brri.gov.bd/" target="_blank" rel="noopener">BRRI</a>, <a href="http://bari.gov.bd/" target="_blank" rel="noopener">BARI</a> crop calendars and <a href="http://srdi.gov.bd/" target="_blank" rel="noopener">SRDI</a> soil texture<em>Non-NASA context · cited, not redistributed</em></span></div>
+      <div class="src"><b>Access</b><span class="r"><a href="https://search.earthdata.nasa.gov/" target="_blank" rel="noopener">NASA Earthdata Search</a> · <a href="https://data.nasa.gov/" target="_blank" rel="noopener">data.nasa.gov</a><em>Earthdata Login required for IMERG, SMAP and HLS</em></span></div>
+    </div>
+    <div class="legalbox">
+      <b>Not endorsed by NASA.</b> RotaShift is an independent student project created for the NASA Space Apps Challenge 2026. It is not affiliated with, authorised by, or endorsed by NASA, and nothing here should be read as a NASA product or position. NASA data are used under their open-data terms; the NASA name and logos are not used to imply approval. All figures in this prototype are illustrative demo values, not an agronomic recommendation.
     </div>
   </div>
 
   <div class="footer">
     <span>ROTASHIFT · NASA SPACE APPS 2026 · CONCEPT PROTOTYPE</span>
-    <span>ILLUSTRATIVE DEMO DATA · NOT AN AGRONOMIC RECOMMENDATION</span>
+    <span>ILLUSTRATIVE DEMO DATA · NOT AN AGRONOMIC RECOMMENDATION · NOT ENDORSED BY NASA</span>
   </div>
 </main>
 </div>
