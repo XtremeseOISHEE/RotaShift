@@ -1,0 +1,222 @@
+{
+  "regional_example": {
+    "name": "Barind, Northwest Bangladesh",
+    "representative_point": {
+      "latitude": 24.37,
+      "longitude": 88.6,
+      "elevation_m": 19.46
+    },
+    "caution": "NASA POWER grid point is regional context, not field measurement."
+  },
+  "crops": [
+    {
+      "id": "aman_brri_dhan66",
+      "name": "Transplanted Aman rice · BRRI dhan66",
+      "season": "Aman",
+      "data_status": "source_documented_partial",
+      "planting": {
+        "seedbed_sowing_window": {
+          "start": "07-05",
+          "end": "07-14",
+          "source_id": "brri_dhan66"
+        },
+        "transplant_window": {
+          "start": "07-25",
+          "end": "08-10",
+          "source_id": "brri_dhan66"
+        },
+        "seedling_age_days": {
+          "min": 20,
+          "max": 25,
+          "source_id": "brri_dhan66"
+        }
+      },
+      "duration_days": {
+        "min": 115,
+        "max": 115,
+        "basis": "BRRI listed cultivar life span; sow-to-harvest timing requires local validation",
+        "source_id": "brri_dhan66"
+      },
+      "water": {
+        "dependence": "rainfed_with_supplemental_irrigation_if_needed",
+        "quantitative_mm_per_season": null,
+        "source_id": "brri_dhan66"
+      },
+      "soil": {
+        "suitable_land": [
+          "high",
+          "medium_high"
+        ],
+        "drought_trait": "tolerant; BRRI notes reproductive stage tolerance of 15–20 days drought",
+        "n_fixing_potential": "no",
+        "cover_duration_proxy": "available_from_duration"
+      },
+      "hazard_rules": [],
+      "missing": [
+        "crop evapotranspiration / seasonal water requirement",
+        "field-specific soil class",
+        "locally validated drought exposure timing",
+        "residue return / biomass for organic matter"
+      ],
+      "field_occupancy": {
+        "start_event": "transplantDate",
+        "duration_basis": "cultivar_life_span_proxy",
+        "source_id": "brri_dhan66",
+        "caveat": "BRRI life span is used as a duration proxy; actual field harvest date is preferred when supplied."
+      }
+    },
+    {
+      "id": "boro_brri_dhan64",
+      "name": "Boro rice · BRRI dhan64",
+      "season": "Boro",
+      "data_status": "source_documented_partial",
+      "planting": {
+        "seedbed_sowing_window": {
+          "start": "11-15",
+          "end": "11-29",
+          "source_id": "brri_dhan64"
+        },
+        "transplant_window": {
+          "start": "12-20",
+          "end": "01-10",
+          "source_id": "brri_dhan64",
+          "crosses_year": true
+        },
+        "seedling_age_days": {
+          "min": 35,
+          "max": 40,
+          "source_id": "brri_dhan64"
+        }
+      },
+      "duration_days": {
+        "min": 152,
+        "max": 152,
+        "basis": "BRRI listed cultivar life span; sow-to-harvest timing requires local validation",
+        "source_id": "brri_dhan64"
+      },
+      "water": {
+        "dependence": "irrigation_dependent",
+        "quantitative_mm_per_season": null,
+        "source_id": "brri_dhan64"
+      },
+      "soil": {
+        "suitable_land": [
+          "high",
+          "medium_high"
+        ],
+        "drought_trait": null,
+        "n_fixing_potential": "no",
+        "cover_duration_proxy": "available_from_duration"
+      },
+      "hazard_rules": [],
+      "missing": [
+        "crop evapotranspiration / seasonal water requirement",
+        "field-specific soil class",
+        "temperature hazard threshold and stage dates",
+        "residue return / biomass for organic matter"
+      ],
+      "field_occupancy": {
+        "start_event": "transplantDate",
+        "duration_basis": "cultivar_life_span_proxy",
+        "source_id": "brri_dhan64",
+        "caveat": "BRRI life span is used as a duration proxy; actual field harvest date is preferred when supplied."
+      }
+    },
+    {
+      "id": "mustard_rajshahi_generic",
+      "name": "Mustard · Rajshahi calendar",
+      "season": "Rabi",
+      "data_status": "source_documented_partial",
+      "planting": {
+        "calendar_season_weeks": {
+          "start": 47,
+          "end": 8,
+          "source_id": "bamis_mustard_rajshahi"
+        },
+        "sowing_advisory_not_used_as_local_hard_window": {
+          "start": "10-15",
+          "end": "11-15",
+          "source_id": "bamis_mustard_sowing",
+          "scope": "Rangpur district advisory; not validated for Rajshahi"
+        }
+      },
+      "duration_days": {
+        "min": 80,
+        "max": 100,
+        "basis": "BAMIS crop weather calendar range",
+        "source_id": "bamis_mustard_rajshahi"
+      },
+      "water": {
+        "dependence": "supplemental_irrigation_at_critical_stages",
+        "quantitative_mm_per_season": null,
+        "source_id": "bamis_mustard_irrigation"
+      },
+      "soil": {
+        "suitable_land": null,
+        "drought_trait": null,
+        "n_fixing_potential": "no",
+        "cover_duration_proxy": "available_from_duration"
+      },
+      "hazard_rules": [],
+      "missing": [
+        "cultivar-specific duration and window",
+        "field soil suitability",
+        "quantitative water requirement",
+        "residue return / biomass for organic matter"
+      ],
+      "field_occupancy": {
+        "start_event": "plantingDate",
+        "duration_basis": "BAMIS_crop_duration",
+        "source_id": "bamis_mustard_rajshahi",
+        "caveat": "Generic Rajshahi calendar duration; confirm cultivar and actual harvest date."
+      }
+    },
+    {
+      "id": "mungbean_bari_mung6",
+      "name": "Mungbean · BARI Mung-6",
+      "season": "Kharif-I",
+      "data_status": "regional_candidate_needs_local_confirmation",
+      "planting": {
+        "sowing_window": {
+          "start": "02-25",
+          "end": "03-15",
+          "source_id": "mungbean_kharif1_guide"
+        },
+        "regional_calendar": {
+          "name": "BAMIS Green Gram (Kharif-I), Rajshahi",
+          "source_id": "bamis_green_gram_rajshahi"
+        }
+      },
+      "duration_days": {
+        "min": 55,
+        "max": 60,
+        "basis": "BARI Mung-6 maturity observed at Ishurdi trial; cultivar and local conditions matter",
+        "source_id": "bari_mung6_maturity"
+      },
+      "water": {
+        "dependence": "unknown",
+        "quantitative_mm_per_season": null,
+        "source_id": null
+      },
+      "soil": {
+        "suitable_land": null,
+        "drought_trait": null,
+        "n_fixing_potential": "yes_potential_only",
+        "cover_duration_proxy": "available_from_duration"
+      },
+      "hazard_rules": [],
+      "missing": [
+        "Barind-specific adoption/rotation evidence",
+        "field soil suitability",
+        "quantitative water requirement",
+        "residue return / biomass for organic matter"
+      ],
+      "field_occupancy": {
+        "start_event": "plantingDate",
+        "duration_basis": "trial_maturity_proxy",
+        "source_id": "bari_mung6_maturity",
+        "caveat": "One Ishurdi trial; local field occupancy and harvest date are unverified."
+      }
+    }
+  ]
+}

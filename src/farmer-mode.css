@@ -1,0 +1,57 @@
+/* Farmer-first two-mode experience */
+.mode-switch,.language-switch{display:flex;align-items:center;gap:5px}
+.language-switch{margin-left:auto;color:var(--muted);font-size:11px}
+.mode-button{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:8px 12px;min-height:40px;font:600 12px Manrope,sans-serif;cursor:pointer}
+.mode-button.selected{background:color-mix(in srgb,var(--green) 16%,var(--card));border-color:var(--green);color:var(--green)}
+.theme-toggle{white-space:nowrap}
+.text-link{color:var(--green);font-size:13px;font-weight:700}
+.farmer-only{margin-top:15px}
+.farmer-priorities{margin-top:20px;padding-top:18px;border-top:1px solid var(--line2)}
+.farmer-priorities h3{margin:0 0 5px}
+.farmer-climate-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.farmer-climate-stat{padding:15px;border:1px solid var(--line2);border-radius:12px;background:color-mix(in srgb,var(--green) 5%,var(--card))}
+.farmer-climate-stat b{display:block;font:800 clamp(20px,3vw,28px) Manrope,sans-serif;color:var(--green)}
+.farmer-climate-stat span{display:block;color:var(--muted);font-size:13px;margin-top:5px}
+.farmer-rotations{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+.farmer-rotation{padding:16px;border:1px solid var(--line2);border-radius:14px;background:var(--card)}
+.farmer-rotation h3{font-size:17px;margin:12px 0}
+.farmer-rotation p{font-size:14px;line-height:1.55;color:var(--muted)}
+.farmer-rotation-top{display:flex;align-items:center;justify-content:space-between;gap:7px}
+.farmer-kicker{font:10px 'DM Mono',monospace;color:var(--faint);text-transform:uppercase}
+.farmer-status{font-size:12px;font-weight:700;padding:6px 9px;border-radius:20px;background:var(--line2)}
+.farmer-status.feasible{color:var(--green)}.farmer-status.incomplete{color:var(--sand)}.farmer-status.infeasible{color:var(--red)}
+.crop-sequence{display:flex;align-items:stretch;gap:6px;flex-wrap:wrap}
+.crop-chip{display:flex;flex-direction:column;gap:4px;padding:10px;border-radius:10px;background:color-mix(in srgb,var(--green) 10%,var(--card));min-width:100px;flex:1}
+.crop-chip b{font-size:14px}.crop-chip small{font-size:11px;color:var(--muted)}.sequence-arrow{align-self:center;color:var(--green);font-size:18px}
+.farmer-rotation details,.more-evidence{margin-top:12px;border-top:1px solid var(--line2);padding-top:10px;color:var(--muted);font-size:13px}
+.tradeoff-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.tradeoff-summary span{display:flex;flex-direction:column;gap:4px;padding:10px;border:1px solid var(--line2);border-radius:10px;background:color-mix(in srgb,var(--green) 5%,var(--card))}
+.tradeoff-summary small{font-size:11px;color:var(--muted)}.tradeoff-summary b{font-size:16px;color:var(--green)}
+.tradeoff-details{margin-top:10px;border-top:1px solid var(--line2);padding-top:8px;color:var(--muted);font-size:13px;line-height:1.55}
+.tradeoff-details summary{cursor:pointer;color:var(--green);font-weight:700;min-height:40px;padding:8px 0}
+.tradeoff-details h4{margin:12px 0 5px;color:var(--text);font-size:14px}.tradeoff-details ul{padding-left:20px}.tradeoff-details li{margin:5px 0}
+.cycle-note{margin:10px 0;padding:12px 14px;border:1px solid var(--line2);border-radius:11px;background:color-mix(in srgb,var(--green) 5%,var(--card));color:var(--muted);font-size:13px;line-height:1.55}
+.priority-focus{margin:10px 0;padding:12px 14px;border:1px solid color-mix(in srgb,var(--green) 45%,var(--line2));border-left:4px solid var(--green);border-radius:11px;background:color-mix(in srgb,var(--green) 8%,var(--card));color:var(--text);font-size:14px;line-height:1.55}
+.priority-focus b{display:block;color:var(--green);margin-bottom:4px}.priority-evidence-focus{margin:12px 0;padding:11px 12px;border:1px solid color-mix(in srgb,var(--green) 50%,var(--line2));border-radius:10px;background:color-mix(in srgb,var(--green) 6%,var(--card));font-size:13px;line-height:1.5}
+.priority-evidence-focus b{color:var(--green)}.farmer-summary{display:grid;gap:6px;margin-top:12px;padding:11px 12px;border-radius:10px;background:color-mix(in srgb,var(--green) 4%,var(--card));border:1px solid var(--line2)}
+.farmer-summary p{margin:0!important;font-size:13px!important}.farmer-summary strong{color:var(--text)}
+.farmer-rotation summary,.more-evidence summary{cursor:pointer;color:var(--green);font-weight:700;min-height:36px;padding-top:5px}
+.farmer-rotation details li{font-size:12px;line-height:1.5}.next-steps{margin:0;padding-left:24px;color:var(--muted);font-size:15px;line-height:1.8}.farmer-empty{color:var(--muted);font-size:14px}
+body[data-mode="farmer"] .app{grid-template-columns:minmax(0,1fr)}
+body[data-mode="farmer"] .sidebar{display:none}
+body[data-mode="farmer"] .evidence-only,body[data-mode="farmer"] .alert:not(#moduleFallback){display:none!important}
+body[data-mode="farmer"] .demo,body[data-mode="farmer"] #field>.cardhead>.tag,body[data-mode="farmer"] .footer{display:none}
+body[data-mode="evidence"] .farmer-only{display:none!important}
+body[data-mode="evidence"] .sidebar{display:flex}
+body[data-mode="evidence"] .app{grid-template-columns:284px minmax(0,1fr)}
+@media(max-width:760px){
+ .main{padding:14px 12px 28px}.topbar{display:flex;flex-wrap:wrap;gap:8px}.mode-switch{order:1}.language-switch{order:2;margin-left:auto}.theme-toggle{order:3;min-height:48px}.demo{order:4;width:100%;text-align:center}
+ .mode-button{padding:8px 10px;font-size:12px}.hero{margin:10px 0 14px}.hero h1{font-size:30px;letter-spacing:-.8px}.hero p{font-size:16px;line-height:1.55}
+ .farmer-climate-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.farmer-climate-stat{padding:12px}.farmer-climate-stat span{font-size:13px}.farmer-rotations{grid-template-columns:1fr}.farmer-rotation{padding:14px}
+ .activity-row{grid-template-columns:1fr!important;gap:10px}.activity-row .crop-field,.activity-row .remove{grid-column:auto}.activity-row .remove{min-height:48px}.fi input,.fi select{min-height:48px;font-size:16px}.pb,.cta,.mode-button,.farmer-rotation summary,.tradeoff-details summary{min-height:48px}.tradeoff-summary{grid-template-columns:1fr 1fr}.cycle-note,.priority-focus{font-size:14px}
+ .range{grid-template-columns:95px minmax(80px,1fr) 30px}.range input{height:10px}.range input::-webkit-slider-thumb{width:22px;height:22px}.simrange{height:12px}.simrange::-webkit-slider-thumb{width:26px;height:26px}.simlayout{grid-template-columns:1fr}.nav{overflow-x:auto}.evidence-matrix{min-width:700px}
+}
+@media(min-width:761px) and (max-width:1050px){.farmer-rotations{grid-template-columns:repeat(2,minmax(0,1fr))}.farmer-climate-grid{grid-template-columns:repeat(2,1fr)}}
+:is(button,input,select,a,summary):focus-visible{outline:3px solid color-mix(in srgb,var(--green) 75%,white);outline-offset:2px}
+html[lang="bn"] body,html[lang="bn"] button,html[lang="bn"] input,html[lang="bn"] select{font-family:"Nirmala UI","Noto Sans Bengali",Manrope,sans-serif}
+html[lang="bn"] .hero h1,html[lang="bn"] .farmer-rotation h3,html[lang="bn"] .farmer-climate-stat b{font-family:"Nirmala UI","Noto Sans Bengali",Manrope,sans-serif;letter-spacing:0}

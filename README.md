@@ -1,132 +1,34 @@
-# 🌾 RotaShift
+# RotaShift
 
-**Don't ask when the water comes. Ask how late it can come before your plan breaks.**
+A local, evidence-transparent MVP for exploring crop-calendar fit and regional rainfall context in Barind, Northwest Bangladesh. Built for the NASA Space Apps Challenge 2026. Independent project; not endorsed by NASA.
 
-A decision-support tool for farmers whose growing season no longer arrives on time.
-Built for the **NASA Space Apps Challenge 2026 — Challenge 7: Field Shift: Adapting Farms with NASA Data.**
+## Run locally
 
-> ⚠️ **Prototype.** Every figure in this build is a sample value in a realistic range, included to demonstrate how the tool works. It is not an agronomic recommendation. See [Data status](#data-status).
+From this directory, start a static server (the app uses ES modules and fetches local JSON, so do not open the HTML as `file://`):
 
----
-
-## The problem
-
-In the haor basin of northeast Bangladesh the year is one crop. Boro rice goes into the ground in Poush and is not ready until late Boishakh — but the flash flood now comes down from the Meghalaya hills before the grain has filled. In the Barind tract of the northwest, the rain arrives late and leaves early, and the ground cracks open while the crop is still in it.
-
-Different crops. Different failures. Different seasons. Same cause: **the calendar these farmers inherited no longer matches the one the sky is keeping.**
-
-Flood warnings exist. They arrive three days before the water. But the farmer's decision — what to plant, and when — was made four months earlier. By then there is nothing left to change.
-
-**Warnings work three days out. RotaShift works four months out, while the decision is still open.**
-
----
-
-## What it does
-
-| | Part | What it answers |
-|---|---|---|
-| 01 | **See what changed** | Has the season moved? By how much, and can we prove it? |
-| 02 | **Ask the farmer** | What can this household actually afford to lose? |
-| 03 | **Adaptation Margin** | How many days can the season shift before this rotation fails? |
-| 04 | **Soil Trajectory** | Does this plan leave the soil better or worse after three years? |
-
-### Adaptation Margin
-
-The headline number. The safe window is derived from observed onset dates, then shifted forward one day at a time until a crop sequence no longer fits between planting and the water arriving. The last day that survives is the margin.
-
-A rotation that tolerates a 26-day shift is a fundamentally different proposition from one that fails at 9 — especially where the onset date already swings ±18 days.
-
-### Soil Trajectory
-
-Measured rather than recited from a textbook, so that it can be defended:
-
-```
-bare-ground days per year        (Sentinel-2 / Landsat NDVI)
-  × heavy rain landing on them   (GPM IMERG extreme-rainfall intensity)
-  × local erodibility            (SRDI soil texture class)
-  + nitrogen direction           (is there a legume in the sequence?)
-  ──────────────────────────────────────────────────────────────
-  → improving · holding · degrading
+```powershell
+python -m http.server 8000
 ```
 
----
+Then open <http://localhost:8000/rotashift.html>. Stop with `Ctrl+C`. Python 3 is sufficient; there are no package dependencies or build step.
 
-## Honest statistics
+## What works
 
-Trends are tested, not asserted. Every figure in the interface carries its test and its p-value.
+- Farmer profile for the Barind regional demonstration: field land class, farmer-entered soil notes, irrigation availability, and a dated existing crop schedule. Profile is saved in this browser's local storage.
+- The frontend loads the crop/source/reference-rotation catalogs and the local NASA POWER series, then calls `compareRotations()` from `src/rotation-engine.js` for the side-by-side cards and evidence table. The API withholds rank/recommendation while outcome evidence is not comparable.
+- A separately fetched and validated NASA POWER daily climate record is bundled at `data/nasa-power-climate.json`, including PRECTOTCORR, T2M_MAX, and T2M_MIN. Temperatures are visible as evidence metadata, but are not yet connected to crop-stage hazard thresholds.
+- Schedule checks include documented sowing/transplant windows, seedling age, land class where supplied, field occupancy, and documented irrigation dependence. A transplanted crop occupies the field from transplanting, not seedbed sowing. An optional actual harvest date can resolve a possible duration-range overlap.
+- Comparison of the entered schedule with two illustrative dated scenarios based on source-listed crop patterns. Their dates are not farmer-verified or locally validated, and the UI shows criterion-level evidence side by side. They are not recommendations.
+- Earlier and later calendar margins are calculated separately by the engine; the simulator reports the first checked constraint failure. Margins are calendar-only while water/hazard constraints are unresolved.
+- Annual rainfall totals and annual means of daily maximum/minimum temperature are summarized from the bundled NASA POWER MERRA-2 series. These are descriptive charts; the app makes no trend or crop-stage stress claim.
+- Evidence gaps and four soil-screening indicators are surfaced. No crop outcome scores or rankings are fabricated.
 
-- **Mann-Kendall** with Sen's slope for onset timing, corrected for autocorrelation
-- **Levene's test** for the change in spread
-- False-discovery-rate correction across grid cells
+## Evidence limits
 
-**Where a change is not statistically significant, the tool says so and withholds the claim.** Select the Derai field in the prototype to see this: the onset trend returns `p = 0.11`, the figure greys out, and the headline reads *no clear shift* instead of inventing one.
+The bundled NASA POWER climate records are daily `PRECTOTCORR`, `T2M_MAX`, and `T2M_MIN`, source MERRA-2, UTC, 1998-01-01 through 2025-12-31, at 24.37 N, 88.60 E. These gridded reanalysis values are not farm-gauge or soil-water measurements. Temperature summaries are descriptive; there are no crop-stage hazard checks. Crop calendars are partial sources, and the catalog explicitly records missing evidence.
 
-A tool that will say something about every field is a tool you cannot trust about any of them.
+The app cannot yet determine seasonal crop water sufficiency, yield, crop-specific hazard exposure, farm costs, field soil properties, measured cover, erosion rate, or organic-matter change. Soil-cover duration is only a crop-duration proxy; legume nitrogen fixation is potential only. Farmer inputs and candidate dates are unverified. Comparative scoring is withheld until comparable evidence exists.
 
----
+See [the audit and input checklist](docs/audit-and-inputs.md), [crop catalog](data/crops.json), [source registry](data/sources.json), and [reference patterns](data/reference-rotations.json).
 
-## Run it
-
-No build step, no dependencies, no server.
-
-```bash
-git clone https://github.com/<user>/rotashift.git
-cd rotashift
-open index.html          # or just double-click the file
-```
-
-Single self-contained HTML file. Fonts load from Google Fonts; everything else is inline. Works offline once cached, and respects your system light/dark setting.
-
-### Try this path
-
-1. **Your field** — set the upazila, soil texture and current rotation
-2. **When does the rain arrive?** — two decades of onset dates, with p-values beneath
-3. Switch the upazila to **Derai** — watch the tool decline to claim a trend
-4. **What matters most to you?** — hit a preset, watch the rotations reorder
-5. **How far can the season move?** — drag slowly to +9, then +18
-
----
-
-## Data status
-
-| Layer | Source | Status |
-|---|---|---|
-| Rainfall, onset, intensity | NASA **GPM IMERG** | Observed · sample values in this build |
-| Temperature, growing degree days | NASA **POWER** | Observed · sample values |
-| Soil moisture | NASA **SMAP** | Current conditions only — record starts 2015, too short for a 20-year trend |
-| Bare-ground days | **Sentinel-2 / Landsat** NDVI | Observed · sample values |
-| Flood extent | **Sentinel-1 SAR** (ESA) | Sees through monsoon cloud, unlike optical |
-| Crop duration, flood tolerance | **BRRI / BARI** | Placeholder — cited, not redistributed |
-| Soil texture class | **SRDI** | Placeholder — cited, not redistributed |
-| Seasonal forecast | — | **Not connected.** Nothing here is a prediction |
-
-### Known limits, stated plainly
-
-- **NASA POWER is a ~50 km grid.** Neighbouring upazilas fall in the same cell and return identical values. Onset detection therefore runs on IMERG (~10 km), not POWER.
-- **SMAP begins in 2015.** Eleven years is too short for a defensible trend, so SMAP informs current conditions only.
-- **Optical NDVI has monsoon cloud gaps.** Sentinel-1 SAR covers the flood-extent layer for that reason.
-- **The Adaptation Margin is a crop-window stress test, not a yield model.** It says when a plan stops fitting — never what it will produce.
-
----
-
-## Roadmap
-
-- Wire the live IMERG pipeline into pre-computed JSON (the interface already reads that shape)
-- Ground-truth onset dates against BWDB / FFWC gauge records
-- Validate crop timings with BRRI across agro-ecological zones
-- Extend beyond the haor: the engine is region-agnostic, so a new crop table is all the Barind or the coastal belt needs
-- Bangla voice output for low-literacy users
-
----
-
-## Attribution
-
-All data sources, libraries, fonts and media used in this project are credited in [`SOURCES.md`](SOURCES.md), as required by the Space Apps participant terms.
-
-## Licence
-
-MIT — see [`LICENSE`](LICENSE).
-
----
-
-<sub>NASA Space Apps Challenge 2026 · Challenge 7 — Field Shift: Adapting Farms with NASA Data · Bangladesh</sub>
+See the [rotation evidence audit](docs/rotation-evidence-audit.md) for crop-pattern readiness, Barind soil/water source review, and MODIS investigation. Refresh the NASA POWER climate file with `python scripts/fetch_nasa_power.py`; it writes a separate file and does not overwrite the preserved precipitation file. Run automated checks with `npm test`.

@@ -1,0 +1,78 @@
+{
+  "status": "reference_patterns_not_farmer_verified",
+  "source_id": "brri_pattern",
+  "patterns": [
+    {
+      "id": "brri_boro_fallow_aman",
+      "name": "Boro → fallow → transplanted Aman",
+      "crops": [
+        "boro_brri_dhan64",
+        "aman_brri_dhan66"
+      ]
+    },
+    {
+      "id": "brri_fallow_fallow_aman",
+      "name": "Fallow → fallow → transplanted Aman",
+      "crops": [
+        "aman_brri_dhan66"
+      ]
+    },
+    {
+      "id": "brri_mustard_boro_aman",
+      "name": "Mustard → Boro → transplanted Aman",
+      "crops": [
+        "mustard_rajshahi_generic",
+        "boro_brri_dhan64",
+        "aman_brri_dhan66"
+      ]
+    }
+  ],
+  "note": "These are source-listed reference patterns, not evidence of a specific farmer's existing practice, local adoption, or recommendation. The example schedules below are dated demonstrations of the constraints, not locally validated calendars. Keep a farmer-entered schedule separate as the actual baseline.",
+  "example_schedules": [
+    {
+      "id": "reference_boro_fallow_aman_example",
+      "pattern_id": "brri_boro_fallow_aman",
+      "role": "regional_reference_baseline",
+      "name": "Reference example · Boro → fallow → transplanted Aman",
+      "activities": [
+        {"cropId": "boro_brri_dhan64", "plantingDate": "2025-11-20", "transplantDate": "2025-12-26"},
+        {"cropId": "aman_brri_dhan66", "plantingDate": "2026-07-10", "transplantDate": "2026-08-01"}
+      ],
+      "assumption_note": "Dates are illustrative dates inside cited BRRI windows; this is not a farmer-reported rotation."
+    },
+    {
+      "id": "reference_mustard_boro_aman_example",
+      "pattern_id": "brri_mustard_boro_aman",
+      "role": "candidate",
+      "name": "Candidate · Mustard → Boro → transplanted Aman",
+      "activities": [
+        {"cropId": "mustard_rajshahi_generic", "plantingDate": "2025-10-15"},
+        {"cropId": "boro_brri_dhan64", "plantingDate": "2025-11-29", "transplantDate": "2026-01-08"},
+        {"cropId": "aman_brri_dhan66", "plantingDate": "2026-07-10", "transplantDate": "2026-08-01"}
+      ],
+      "assumption_note": "Mustard-to-Boro interval is only 85 days to Boro transplant, within BAMIS mustard's 80–100 day duration range; possible same-field overlap needs actual harvest confirmation."
+    },
+    {
+      "id": "reference_fallow_fallow_aman_example",
+      "pattern_id": "brri_fallow_fallow_aman",
+      "role": "candidate",
+      "name": "Candidate · Fallow → fallow → transplanted Aman",
+      "activities": [
+        {"cropId": "aman_brri_dhan66", "plantingDate": "2026-07-10", "transplantDate": "2026-08-01"}
+      ],
+      "assumption_note": "The BRRI profile lists the pattern. Fallow is not treated as a crop or as proof of a farmer's actual practice."
+    },
+    {
+      "id": "mustard_boro_definite_overlap_example",
+      "pattern_id": "brri_mustard_boro_aman",
+      "role": "constraint_test_example",
+      "name": "Rejected example · Mustard overlaps Boro field entry",
+      "activities": [
+        {"cropId": "mustard_rajshahi_generic", "plantingDate": "2025-10-15"},
+        {"cropId": "boro_brri_dhan64", "plantingDate": "2025-11-20", "transplantDate": "2025-12-20"},
+        {"cropId": "aman_brri_dhan66", "plantingDate": "2026-07-10", "transplantDate": "2026-08-01"}
+      ],
+      "assumption_note": "Boro enters the field 66 days after mustard sowing, earlier than even the 80-day minimum sourced duration. Same-field sequence is infeasible under these dates."
+    }
+  ]
+}

@@ -62,7 +62,7 @@ h1,h2,h3,.mn{font-family:Manrope,sans-serif;margin:0}
 .cta:hover span{transform:translateY(3px)}
 
 .alert{display:flex;align-items:center;gap:13px;flex-wrap:wrap;background:color-mix(in srgb,var(--green) 10%,var(--card));border:1px solid color-mix(in srgb,var(--green) 24%,var(--line));border-radius:12px;padding:13px 16px;margin-bottom:17px}
-.alerticon{background:color-mix(in srgb,var(--green) 20%,transparent);border-radius:9px;padding:8px 10px;color:var(--green);font-size:14px}
+.alert[hidden]{display:none}.alerticon{background:color-mix(in srgb,var(--green) 20%,transparent);border-radius:9px;padding:8px 10px;color:var(--green);font-size:14px}
 .alertcopy{flex:1;min-width:220px;font-size:12.5px;color:var(--muted);line-height:1.6}
 .alertcopy b{color:var(--ink)}
 .alertstat{font:10px 'DM Mono',monospace;color:var(--green);white-space:nowrap;letter-spacing:.05em}
@@ -193,12 +193,12 @@ h1,h2,h3,.mn{font-family:Manrope,sans-serif;margin:0}
 /* toast + reveal */
 #toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:var(--ink);color:var(--paper);padding:11px 18px;border-radius:10px;font-size:12.5px;opacity:0;pointer-events:none;transition:.3s;z-index:60;box-shadow:var(--lift)}
 #toast.show{opacity:1;transform:translate(-50%,0)}
-.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,.7,.3,1)}
+.rv{opacity:1;transform:none;transition:opacity .6s ease,transform .6s cubic-bezier(.22,.7,.3,1)}
 .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.rv{opacity:1;transform:none}}
 @media (max-width:1040px){.grid,.simlayout,.scen{grid-template-columns:1fr}}
 @media (max-width:860px){
- .app{grid-template-columns:1fr}
+.app{grid-template-columns:1fr}
  .sidebar{position:sticky;top:0;height:auto;flex-direction:row;align-items:center;overflow-x:auto;gap:8px;padding:12px 14px;border-right:0;border-bottom:1px solid var(--line)}
  .brand{padding:0 12px 0 0;font-size:17px}
  .navlabel,.sidebottom{display:none}
@@ -206,285 +206,19 @@ h1,h2,h3,.mn{font-family:Manrope,sans-serif;margin:0}
  .main{padding:20px 18px 40px}.stats{grid-template-columns:1fr}
  .simitem{grid-template-columns:1fr 70px}
 }
-</style></head><body>
-<div class="app">
-<aside class="sidebar">
-  <div class="brand"><span class="mark">🌾</span>RotaShift</div>
-  <div class="navlabel">Workspace</div>
-  <nav class="nav">
-    <a href="#overview" class="active"><i>▦</i>Overview</a>
-    <a href="#field"><i>◱</i>Your field</a>
-    <a href="#shift"><i>⌁</i>Climate shift</a>
-    <a href="#rotations"><i>☷</i>Rotations</a>
-    <a href="#sim"><i>◇</i>Shift simulator</a>
-    <a href="#scenario"><i>⧉</i>Four-year view</a>
-    <a href="#methods"><i>⌖</i>Methods &amp; evidence</a>
-    <a href="#sources"><i>❏</i>Data sources</a>
-  </nav>
-  <div class="sidebottom">
-    <div class="region">
-      <span class="mono" style="font-size:9px;letter-spacing:1px;color:var(--faint)">ACTIVE FIELD</span>
-      <b id="sbHaor">Tanguar haor</b>
-      <span id="sbPlace">Tahirpur, Sunamganj · Boro season</span>
-    </div>
-    <div class="profile">◉&nbsp; Research demo · Space Apps 2026<br>Challenge 7 — Field Shift</div>
-  </div>
-</aside>
 
-<main class="main">
-  <div class="topbar">
-    <span>Workspace &nbsp;/&nbsp; <b>Season outlook</b></span>
-    <span class="demo">● PROTOTYPE · DEMO DATA</span>
-    <button class="share" id="shareBtn">↗ Share</button>
-  </div>
-
-  <section id="overview" class="hero rv">
-    <div>
-      <div class="eyebrow">NASA Space Apps 2026 · Challenge 7 · Field Shift</div>
-      <h1>Climate-aware crop planning</h1>
-      <p>Make room for a changing season. Understand the shift. Stress-test a plan. Choose a rotation with room to adapt — four months before the water arrives, when the decision is still open.</p>
-    </div>
-    <div class="heroside">
-      <select class="select" id="fplace" title="Choose a field">
-        <option>Tahirpur</option><option>Dharmapasha</option><option>Jamalganj</option><option>Derai</option>
-      </select>
-      <a class="cta" href="#field">Try the prototype <span>↓</span></a>
-    </div>
-  </section>
-
-  <div class="alert rv">
-    <span class="alerticon">↗</span>
-    <div class="alertcopy"><b id="alertMain">Seasonal onset is trending earlier — and becoming less predictable.</b><br>Illustrative analysis for a representative haor farming zone, upstream catchment rainfall 2003–2025.</div>
-    <span class="alertstat" id="alertStat">−11 DAYS · ±3.4× VARIABILITY</span>
-  </div>
-
-  <div class="card fieldcard rv" id="field" style="margin-top:0">
-    <div class="cardhead">
-      <div><h2>Your field</h2><p class="sub">Tell us where it is and what you grow now — every number below is worked out for this field</p></div>
-      <span class="tag">STEP 01</span>
-    </div>
-    <div class="fields">
-      <div class="fi"><label for="fname">Your name</label><input id="fname" value="Abdul Karim"></div>
-      <div class="fi"><label for="fupa">Upazila</label><select id="fupa"><option>Tahirpur</option><option>Dharmapasha</option><option>Jamalganj</option><option>Derai</option></select></div>
-      <div class="fi"><label for="fsize">Field size</label><input id="fsize" value="1.2 hectare"></div>
-      <div class="fi"><label for="fsoil">Soil texture (SRDI)</label><select id="fsoil"><option>Clay loam</option><option>Silty clay</option><option>Sandy loam</option></select></div>
-      <div class="fi"><label for="fcur">What you grow now</label><select id="fcur"></select></div>
-    </div>
-    <div class="youare" id="youare"></div>
-  </div>
-
-  <div class="grid rv" id="shift" style="margin-top:15px">
-    <div class="card">
-      <div class="cardhead">
-        <div><h2>When does the rain arrive?</h2><p class="sub">Seasonal onset distributions · day of year · <span id="eraLbl">1998–2007 vs 2017–2026</span></p></div>
-        <span class="tag">STEP 02</span>
-      </div>
-      <svg class="chart" id="dist" viewBox="0 0 700 252" role="img" aria-label="Seasonal onset distributions, historical versus recent"></svg>
-      <div class="stats" id="stats"></div>
-    </div>
-    <div class="card">
-      <div class="cardhead">
-        <div><h2>What matters most to you?</h2><p class="sub">Tune priorities to rerank rotations</p></div>
-        <span class="tag">YOUR PLAN</span>
-      </div>
-      <div class="presets">
-        <button class="pb" data-preset="safe">No bad years</button>
-        <button class="pb" data-preset="income">Most rice</button>
-        <button class="pb" data-preset="land">Better soil</button>
-        <button class="pb on" data-preset="even">Balanced</button>
-      </div>
-      <div class="priorities" id="prios"></div>
-      <div class="note">Weights reorder the demo ranking; they do not predict farm outcomes.</div>
-    </div>
-  </div>
-
-  <div class="card rotationcard rv" id="rotations">
-    <div class="rotationhead">
-      <div><h2>Rotations with room to adapt</h2><p class="sub">Ranked for your priorities · modeled across onset shifts</p></div>
-      <span class="tag" id="rotTag">5 CANDIDATES</span>
-    </div>
-    <div class="rotations" id="rots"></div>
-  </div>
-
-  <div class="card sim rv" id="sim">
-    <div class="cardhead">
-      <div><h2>How far can the season move?</h2><p class="sub">Stress-test crop windows against a hypothetical onset shift</p></div>
-      <span class="tag">WHAT-IF SIMULATION</span>
-    </div>
-    <div class="simlayout">
-      <div>
-        <input type="range" class="simrange" id="simr" min="-21" max="35" value="0" step="1">
-        <div class="scale"><span>← 21 days later</span><span>Current timing</span><span>35 days earlier →</span></div>
-        <div class="simitems" id="simitems"></div>
-      </div>
-      <div>
-        <div class="mono" style="font-size:9px;letter-spacing:1.1px;color:var(--faint)">SEASON SHIFT</div>
-        <div class="simval" id="simval">0 days</div>
-        <div class="simnote" id="simnote">Baseline timing · all windows hold</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card scenario rv" id="scenario">
-    <div class="scenario-title">
-      <div><h2>One four-year plan. Two ways forward.</h2><p class="sub">Illustrative scenarios · same starting conditions, same field</p></div>
-      <span class="tag">SCENARIO VIEW</span>
-    </div>
-    <div class="scen">
-      <div class="sc bad"><h3>Old calendar</h3><div class="st2">FIXED SEQUENCE · SAME DATE EVERY YEAR</div><div id="oldYears"></div></div>
-      <div class="sc good"><h3>Adaptive rotation</h3><div class="st2">WINDOW-AWARE SEQUENCE</div><div id="newYears"></div></div>
-    </div>
-  </div>
-
-  <div class="card methods rv" id="methods">
-    <div class="cardhead">
-      <div><h2>Methods &amp; evidence</h2><p class="sub">What informs a recommendation — and what remains a scenario</p></div>
-      <span class="tag">TRANSPARENT BY DESIGN</span>
-    </div>
-    <div class="meth">
-      <div class="me"><h3>NASA observation</h3><p>Precipitation from <a href="https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGDF_07/summary" target="_blank" rel="noopener">GPM IMERG Final Daily V07</a> over the upstream catchment, 1998–2025. Trend tested with Mann-Kendall and Sen's slope, corrected for autocorrelation. Temperature and growing degree days from <a href="https://power.larc.nasa.gov/" target="_blank" rel="noopener">NASA POWER</a>.<span class="pid">GPM_3IMERGDF_07 · 0.1° grid · GES DISC</span></p><span class="bdg obs">OBSERVED · DEMO VALUES</span></div>
-      <div class="me"><h3>Local constraints</h3><p>Crop duration, flood tolerance and water need from <a href="http://brri.gov.bd/" target="_blank" rel="noopener">BRRI</a> and <a href="http://bari.gov.bd/" target="_blank" rel="noopener">BARI</a> publications; soil texture class from <a href="http://srdi.gov.bd/" target="_blank" rel="noopener">SRDI</a>. Cited rather than redistributed — no third-party dataset is bundled in this repository.<span class="pid">BANGLADESH · NON-NASA CONTEXT</span></p><span class="bdg ctx">CONTEXT · PLACEHOLDER</span></div>
-      <div class="me"><h3>Forecast</h3><p>No live or seasonal forecast is connected in this prototype. Everything shown is derived from the historical record, never from a prediction of next season.</p><span class="bdg no">NOT CONNECTED</span></div>
-      <div class="me"><h3>Simulation</h3><p>The adaptation margin is an illustrative crop-window stress test. A planning aid, not an outcome prediction — it says when a plan stops fitting, not what it will yield. Soil trajectory uses bare-ground days from <a href="https://www.earthdata.nasa.gov/data/catalog/lpcloud-hlsl30-2.0" target="_blank" rel="noopener">HLS</a> NDVI.<span class="pid">HLSL30 / HLSS30 v2.0 · LP DAAC</span></p><span class="bdg sim">WHAT-IF · DEMO MODEL</span></div>
-    </div>
-  </div>
-
-
-  <div class="card rv" id="sources">
-    <div class="cardhead">
-      <div><h2>Data sources &amp; attribution</h2><p class="sub">Exact products, versions and identifiers behind every layer</p></div>
-      <span class="tag">ATTRIBUTION</span>
-    </div>
-    <div class="srcs">
-      <div class="src"><b>Precipitation</b><span class="r"><a href="https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGDF_07/summary" target="_blank" rel="noopener">NASA GPM IMERG Final Precipitation L3 Daily 0.1° V07</a> — onset date, extreme-rainfall intensity, onset variability<em>GPM_3IMERGDF_07 · NASA GES DISC · 0.1° (~10 km)</em></span></div>
-      <div class="src"><b>Agroclimatology</b><span class="r"><a href="https://power.larc.nasa.gov/" target="_blank" rel="noopener">NASA POWER</a> — temperature, growing degree days, solar radiation<em>~50 km grid — not used for onset detection at upazila scale</em></span></div>
-      <div class="src"><b>Soil moisture</b><span class="r"><a href="https://nsidc.org/data/spl3smp_e/versions/6" target="_blank" rel="noopener">NASA SMAP Enhanced L3 Radiometer Daily 9 km V006</a> — current-season conditions only<em>SPL3SMP_E · DOI 10.5067/M20OXIZHY3RJ · NSIDC DAAC · record begins 2015, too short for trend</em></span></div>
-      <div class="src"><b>Surface reflectance</b><span class="r"><a href="https://www.earthdata.nasa.gov/data/catalog/lpcloud-hlsl30-2.0" target="_blank" rel="noopener">NASA HLS Landsat OLI 30 m v2.0</a> and <a href="https://www.earthdata.nasa.gov/data/catalog/lpcloud-hlss30-2.0" target="_blank" rel="noopener">HLS Sentinel-2 MSI 30 m v2.0</a> — NDVI-derived bare-ground days<em>HLSL30 DOI 10.5067/HLS/HLSL30.002 · HLSS30 DOI 10.5067/HLS/HLSS30.002 · LP DAAC</em></span></div>
-      <div class="src"><b>Land surface temp</b><span class="r">NASA MODIS Land Surface Temperature — heat-stress detection<em>MOD11A2 · LP DAAC</em></span></div>
-      <div class="src"><b>Flood extent</b><span class="r"><a href="https://dataspace.copernicus.eu/" target="_blank" rel="noopener">ESA Copernicus Sentinel-1 SAR</a> — cloud-penetrating inundation mapping<em>Partner-agency data — not a NASA product</em></span></div>
-      <div class="src"><b>Crop &amp; soil</b><span class="r"><a href="http://brri.gov.bd/" target="_blank" rel="noopener">BRRI</a>, <a href="http://bari.gov.bd/" target="_blank" rel="noopener">BARI</a> crop calendars and <a href="http://srdi.gov.bd/" target="_blank" rel="noopener">SRDI</a> soil texture<em>Non-NASA context · cited, not redistributed</em></span></div>
-      <div class="src"><b>Access</b><span class="r"><a href="https://search.earthdata.nasa.gov/" target="_blank" rel="noopener">NASA Earthdata Search</a> · <a href="https://data.nasa.gov/" target="_blank" rel="noopener">data.nasa.gov</a><em>Earthdata Login required for IMERG, SMAP and HLS</em></span></div>
-    </div>
-    <div class="legalbox">
-      <b>Not endorsed by NASA.</b> RotaShift is an independent student project created for the NASA Space Apps Challenge 2026. It is not affiliated with, authorised by, or endorsed by NASA, and nothing here should be read as a NASA product or position. NASA data are used under their open-data terms; the NASA name and logos are not used to imply approval. All figures in this prototype are illustrative demo values, not an agronomic recommendation.
-    </div>
-  </div>
-
-  <div class="footer">
-    <span>ROTASHIFT · NASA SPACE APPS 2026 · CONCEPT PROTOTYPE</span>
-    <span>ILLUSTRATIVE DEMO DATA · NOT AN AGRONOMIC RECOMMENDATION · NOT ENDORSED BY NASA</span>
-  </div>
-</main>
-</div>
-<div id="toast"></div>
-<script>
-const $=i=>document.getElementById(i);
-const PLACES={
- Tahirpur:{haor:'Tanguar haor',then:{m:112,s:5.2},now:{m:101,s:17.9},ext:[31,39],p:[.03,.04,.01]},
- Dharmapasha:{haor:'Chandra Sonar Thal',then:{m:114,s:6.0},now:{m:106,s:15.2},ext:[29,36],p:[.06,.03,.02]},
- Jamalganj:{haor:'Pagner haor',then:{m:110,s:4.8},now:{m:97,s:19.4},ext:[33,42],p:[.01,.02,.01]},
- Derai:{haor:'Shani haor',then:{m:116,s:5.6},now:{m:110,s:12.1},ext:[30,34],p:[.11,.08,.04]}};
-const ROTS=[
- {id:'r1',n:'Long Boro, then fallow',c:'Boro BRRI dhan29 (165 d) → fallow',margin:9,bare:168,dir:'down',s:{yield:88,risk:25,soil:20,water:28,cost:72}},
- {id:'r2',n:'Medium Boro → Aman',c:'Boro (148 d) → Aman rice (120 d)',margin:14,bare:96,dir:'down',s:{yield:92,risk:38,soil:35,water:25,cost:55}},
- {id:'r3',n:'Short Boro → sesame',c:'Boro BRRI dhan28 (128 d) → sesame',margin:18,bare:118,dir:'flat',s:{yield:66,risk:62,soil:52,water:60,cost:64}},
- {id:'r4',n:'Short Boro → mung bean',c:'Boro (128 d) → mung bean → fallow',margin:21,bare:102,dir:'up',s:{yield:71,risk:74,soil:78,water:68,cost:60}},
- {id:'r5',n:'Resilient pulse mix',c:'Short Boro → mung bean → dhaincha',margin:26,bare:58,dir:'up',s:{yield:63,risk:86,soil:94,water:72,cost:48}}];
-const KEYS=[{k:'yield',l:'Yield'},{k:'risk',l:'Risk'},{k:'soil',l:'Soil health'},{k:'water',l:'Water'},{k:'cost',l:'Cost'}];
-const PRE={safe:{yield:25,risk:100,soil:55,water:45,cost:50},income:{yield:100,risk:25,soil:25,water:30,cost:40},land:{yield:35,risk:60,soil:100,water:80,cost:35},even:{yield:65,risk:80,soil:55,water:70,cost:45}};
-const DIR={up:'SOIL IMPROVES',flat:'SOIL HOLDS',down:'SOIL DEGRADES'},DC={up:'low',flat:'med',down:'high'};
-let W={...PRE.even},SHIFT=0,MINE='r1',PLACE='Tahirpur';
-const CUM=[0,31,59,90,120,151,181,212,243,273,304,334],MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const dayStr=d=>{let i=11;while(d<=CUM[i])i--;return (d-CUM[i])+' '+MON[i]};
-let tt;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),1900)}
-
-const fcur=$('fcur');
-ROTS.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.n;fcur.appendChild(o)});
-fcur.value=MINE;
-fcur.onchange=()=>{MINE=fcur.value;rots();you();toast('Current plan set to “'+ROTS.find(r=>r.id===MINE).n+'”')};
-$('fname').oninput=you;$('fsize').oninput=you;$('fsoil').onchange=()=>{you();toast('Soil texture updated — erosion weighting recalculated')};
-function setPlace(v,src){PLACE=v;$('fupa').value=v;$('fplace').value=v;all();toast('Switched to '+PLACES[v].haor+' · '+v)}
-$('fupa').onchange=e=>setPlace(e.target.value);
-$('fplace').onchange=e=>setPlace(e.target.value);
-
-const pr=$('prios');
-KEYS.forEach(({k,l})=>{const d=document.createElement('div');d.className='range';
- d.innerHTML='<span>'+l+'</span><input type="range" id="w_'+k+'" min="0" max="100" step="5" value="'+W[k]+'"><output id="o_'+k+'">'+W[k]+'</output>';
- pr.appendChild(d);
- d.querySelector('input').oninput=e=>{W[k]=+e.target.value;$('o_'+k).value=W[k];document.querySelectorAll('.pb').forEach(b=>b.classList.remove('on'));rots()}});
-document.querySelectorAll('.pb').forEach(b=>b.onclick=()=>{W={...PRE[b.dataset.preset]};
- document.querySelectorAll('.pb').forEach(x=>x.classList.toggle('on',x===b));
- KEYS.forEach(({k})=>{$('w_'+k).value=W[k];$('o_'+k).value=W[k]});rots();toast('Ranking updated for “'+b.textContent+'”')});
-$('simr').oninput=e=>{SHIFT=+e.target.value;rots();sim()};
-$('shareBtn').onclick=()=>{const u=location.href;(navigator.clipboard?navigator.clipboard.writeText(u):0);toast('Link copied to clipboard')};
-
-function you(){const nm=$('fname').value.trim()||'You',sz=$('fsize').value.trim(),so=$('fsoil').value,
- r=ROTS.find(x=>x.id===MINE),p=PLACES[PLACE],sw=Math.round(p.now.s);
- $('youare').innerHTML='<b>'+nm+'</b> · '+sz+' of '+so.toLowerCase()+' in '+PLACE+', growing <b>'+r.n.toLowerCase()+'</b>. This plan holds if the water arrives up to <b>'+r.margin+' days</b> early. The onset date in this area now swings about <b>±'+sw+' days</b> — '+(r.margin>=sw?'your plan sits inside that swing.':'<b>narrower than the swing</b>, so some years it will not hold.')}
-function place(){const p=PLACES[PLACE];$('sbHaor').textContent=p.haor;$('sbPlace').textContent=PLACE+', Sunamganj · Boro season';
- const sh=Math.round(p.then.m-p.now.m),rat=(p.now.s/p.then.s).toFixed(1),ok=p.p[0]<.05;
- $('alertStat').textContent=(ok?'−'+sh+' DAYS':'NO CLEAR SHIFT')+' · ±'+rat+'× VARIABILITY';
- $('alertMain').textContent=ok?'Seasonal onset is trending earlier — and becoming less predictable.'
-  :'Onset timing shows no statistically clear trend here — but the date has become much harder to predict.'}
-function stats(){const p=PLACES[PLACE],sh=Math.round(p.then.m-p.now.m),st=Math.round(p.then.s),sn=Math.round(p.now.s),
- rat=(p.now.s/p.then.s).toFixed(1),ok=v=>v<.05,f=v=>(ok(v)?'significant':'NOT significant');
- $('stats').innerHTML=
- '<div class="stat '+(ok(p.p[0])?'sig':'')+'"><b class="'+(ok(p.p[0])?'':'q')+'">'+(ok(p.p[0])?'−'+sh+'d':'no clear shift')+'</b><span>median onset shift · earlier</span><em>Mann-Kendall p='+p.p[0].toFixed(2)+' · '+f(p.p[0])+'</em></div>'+
- '<div class="stat '+(ok(p.p[2])?'warn':'')+'"><b class="'+(ok(p.p[2])?'':'q')+'">'+rat+'×</b><span>onset variability · wider (±'+st+'d → ±'+sn+'d)</span><em>Levene test p='+p.p[2].toFixed(2)+' · '+f(p.p[2])+'</em></div>'+
- '<div class="stat '+(ok(p.p[1])?'sig':'')+'"><b class="'+(ok(p.p[1])?'':'q')+'">+'+(p.ext[1]-p.ext[0])+'%</b><span>rain in heaviest 10% · more intense</span><em>Sen slope p='+p.p[1].toFixed(2)+' · '+f(p.p[1])+'</em></div>'}
-function chart(){const p=PLACES[PLACE],W_=700,H=252,L=42,R=16,T=22,B=40,x0=75,x1=148;
- const px=d=>L+(d-x0)/(x1-x0)*(W_-L-R),g=(x,m,s)=>Math.exp(-.5*Math.pow((x-m)/s,2))/(s*Math.sqrt(2*Math.PI));
- const pk=g(p.then.m,p.then.m,p.then.s),py=v=>H-B-(v/pk)*(H-T-B)*.86;
- const pa=(m,s)=>{let q='';for(let d=x0;d<=x1;d+=.5)q+=(q?'L':'M')+px(d).toFixed(1)+','+py(g(d,m,s)).toFixed(1);return q};
- const ar=(m,s)=>pa(m,s)+'L'+px(x1)+','+(H-B)+'L'+px(x0)+','+(H-B)+'Z';
- let o='';
- ['High','Mid','Low'].forEach((t,i)=>{const y=T+i*((H-T-B)/3);o+='<line x1="'+L+'" y1="'+y+'" x2="'+(W_-R)+'" y2="'+y+'" stroke="var(--line2)"/><text x="6" y="'+(y+4)+'" font-family="DM Mono,monospace" font-size="9" fill="var(--faint)">'+t+'</text>'});
- o+='<line x1="'+L+'" y1="'+(H-B)+'" x2="'+(W_-R)+'" y2="'+(H-B)+'" stroke="var(--line)"/><text x="6" y="'+(H-B+4)+'" font-family="DM Mono,monospace" font-size="9" fill="var(--faint)">0</text>';
- [[91,'Apr 1'],[105,'Apr 15'],[121,'May 1'],[135,'May 15']].forEach(t=>{o+='<text x="'+px(t[0])+'" y="'+(H-B+19)+'" text-anchor="middle" font-family="DM Mono,monospace" font-size="9.5" fill="var(--faint)">'+t[1]+'</text>'});
- o+='<path d="'+ar(p.then.m,p.then.s)+'" fill="var(--muted)" opacity=".12"/><path d="'+ar(p.now.m,p.now.s)+'" fill="var(--red)" opacity=".13"/>';
- o+='<path class="ln" d="'+pa(p.then.m,p.then.s)+'" fill="none" stroke="var(--muted)" stroke-width="2.3"/>';
- o+='<path class="ln" d="'+pa(p.now.m,p.now.s)+'" fill="none" stroke="var(--red)" stroke-width="2.3"/>';
- o+='<line x1="'+px(p.then.m)+'" y1="'+py(pk)+'" x2="'+px(p.then.m)+'" y2="'+(H-B)+'" stroke="var(--muted)" stroke-dasharray="3 3"/>';
- o+='<line x1="'+px(p.now.m)+'" y1="'+py(g(p.now.m,p.now.m,p.now.s))+'" x2="'+px(p.now.m)+'" y2="'+(H-B)+'" stroke="var(--red)" stroke-dasharray="3 3"/>';
- const sh=Math.round(p.then.m-p.now.m);
- if(sh>0){const mid=(px(p.then.m)+px(p.now.m))/2;o+='<text x="'+mid+'" y="'+(T-6)+'" text-anchor="middle" font-family="DM Mono,monospace" font-size="9.5" fill="var(--red)">'+sh+' days earlier</text>'+
-  '<line x1="'+px(p.now.m)+'" y1="'+(T-2)+'" x2="'+px(p.then.m)+'" y2="'+(T-2)+'" stroke="var(--red)" stroke-width="1" opacity=".5"/>'}
- o+='<text x="'+(W_-R)+'" y="'+(T-6)+'" text-anchor="end" font-family="DM Mono,monospace" font-size="9" fill="var(--faint)">SEASONAL RAIN ONSET</text>';
- $('dist').innerHTML=o;
- $('dist').querySelectorAll('.ln').forEach(p2=>{const L2=p2.getTotalLength();p2.style.strokeDasharray=L2;p2.style.strokeDashoffset=L2;p2.getBoundingClientRect();p2.style.transition='stroke-dashoffset 1.1s cubic-bezier(.22,.7,.3,1)';p2.style.strokeDashoffset=0});
- $('eraLbl').textContent='1998–2007 (usually '+dayStr(Math.round(p.then.m))+') vs 2017–2026 (usually '+dayStr(Math.round(p.now.m))+')'}
-const sc=r=>{let n=0,d=0;KEYS.forEach(({k})=>{n+=(k==='risk'?r.s.risk:r.s[k])*W[k];d+=W[k]});return d?n/d:0};
-function rots(){const h=$('rots'),was=new Map();
- h.querySelectorAll('.rotation').forEach(e=>was.set(e.dataset.id,e.getBoundingClientRect()));
- const ord=[...ROTS].sort((a,b)=>{const A=a.margin>=SHIFT,B=b.margin>=SHIFT;if(A!==B)return A?-1:1;return sc(b)-sc(a)});
- h.innerHTML=ord.map((r,i)=>{const br=r.margin<SHIFT,rk=r.s.risk>=75?'low':r.s.risk>=50?'med':'high',rt=r.s.risk>=75?'LOW':r.s.risk>=50?'MODERATE':'ELEVATED';
-  return '<article class="rotation'+(br?' brk':'')+(r.id===MINE?' mine':'')+'" data-id="'+r.id+'"><span class="rank">#0'+(i+1)+'</span>'+
-  '<h3>'+r.n+'</h3><div class="crops">'+r.c+'</div>'+
-  '<div class="margin"><b>'+(br?'✕':r.margin)+'</b> <span>'+(br?'fails at +'+r.margin+'d':'day margin')+'</span></div>'+
-  '<div class="barlabel"><span>SOIL TRAJECTORY</span><span>'+r.bare+' bare d/yr</span></div><div class="bar soil"><i style="width:'+r.s.soil+'%"></i></div>'+
-  '<div class="barlabel"><span>WATER FIT</span><span>'+r.s.water+'/100</span></div><div class="bar"><i style="width:'+r.s.water+'%"></i></div>'+
-  '<span class="risk '+DC[r.dir]+'">'+DIR[r.dir]+'</span><span class="risk '+rk+'">'+rt+' · weather risk</span>'+
-  (r.id===MINE?'<span class="risk yours">YOUR PLAN</span>':'')+'</article>'}).join('');
- h.querySelectorAll('.rotation').forEach(e=>{const b=was.get(e.dataset.id);if(!b)return;const n=e.getBoundingClientRect(),dx=b.left-n.left,dy=b.top-n.top;
-  if(!dx&&!dy)return;e.style.transition='none';e.style.transform='translate('+dx+'px,'+dy+'px)';
-  requestAnimationFrame(()=>{e.style.transition='';e.style.transform=''})})}
-function sim(){const sw=Math.round(PLACES[PLACE].now.s),alive=ROTS.filter(r=>r.margin>=SHIFT).length,brk=ROTS.length-alive;
- $('simval').textContent=(SHIFT>0?'+':'')+SHIFT+' days';$('simval').classList.toggle('hot',brk>0);
- $('simnote').textContent=SHIFT<=0?'Baseline or later onset · all windows hold'
-  :(alive===0?'No window survives an onset this early.':brk+' rotation'+(brk===1?'':'s')+' cross'+(brk===1?'es':'')+' the break threshold. This area already swings ±'+sw+' days.');
- $('simitems').innerHTML=ROTS.map(r=>{const rem=r.margin-SHIFT,h=rem>=0;
-  return '<div class="simitem'+(h?'':' out')+'"><span>'+r.n+'</span><div class="track"><i style="width:'+Math.max(5,Math.min(100,(rem+21)/56*100))+'%;background:'+(h?'var(--green)':'var(--red)')+'"></i></div><span class="state '+(h?'hold':'break')+'">'+(h?'HOLDS · '+rem+'d':'BREAKS')+'</span></div>'}).join('')}
-function years(id,rows){$(id).innerHTML=rows.map((r,i)=>'<div class="year"><span class="yearnum">YEAR 0'+(i+1)+'</span><span>'+r[0]+'</span><span class="yield '+(r[2]?'ok':'bad')+'">'+r[1]+'</span></div>').join('')}
-years('oldYears',[['Long Boro rice','100%',1],['Long Boro rice','94%',1],['Long Boro rice · flooded','61%',0],['Long Boro rice','79%',0]]);
-years('newYears',[['Short Boro → mung','96%',1],['Short Boro → dhaincha','94%',1],['Short Boro → mung','92%',1],['Short Boro → lentil','91%',1]]);
-function all(){place();stats();chart();rots();sim();you()}
-all();
-
-/* reveal on scroll */
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});
-document.querySelectorAll('.rv').forEach((e,i)=>{e.style.transitionDelay=(i*60)+'ms';io.observe(e)});
-/* scroll spy */
-const links=[...document.querySelectorAll('.nav a')],secs=links.map(a=>$(a.getAttribute('href').slice(1))).filter(Boolean);
-const sp=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-20% 0px -70% 0px'});
-secs.forEach(s=>sp.observe(s));
-</script></body></html>
+.schedule{display:grid;gap:9px}.activity-row{display:grid;grid-template-columns:minmax(150px,1.35fr) repeat(3,minmax(125px,1fr)) auto;gap:9px;align-items:end;padding:10px;border:1px solid var(--line2);border-radius:10px}.activity-row .remove{color:var(--red);border-color:color-mix(in srgb,var(--red) 30%,var(--line))}.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:20px;font:9px 'DM Mono',monospace;letter-spacing:.04em}.pill.incomplete{color:var(--amber);background:color-mix(in srgb,var(--sand) 15%,transparent)}.pill.infeasible{color:var(--red);background:color-mix(in srgb,var(--red) 12%,transparent)}.pill.feasible{color:var(--green);background:color-mix(in srgb,var(--green) 13%,transparent)}.rotations{grid-template-columns:repeat(auto-fit,minmax(245px,1fr))}.rotation{cursor:default}.rotation .margin b{font-size:18px}.rotation .crops{min-height:0;margin:8px 0}.rotation .evidence-list{margin:10px 0 0;padding:0;list-style:none;color:var(--muted);font-size:10.5px}.rotation .evidence-list li{border-top:1px solid var(--line2);padding:6px 0}.rotation .metric{color:var(--faint);font:9px 'DM Mono',monospace;letter-spacing:.04em}.rotation .rank{position:static}.statusline{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.calendar-template{font-size:10px;color:var(--faint);margin-top:9px;line-height:1.5}
+.matrix-scroll{overflow-x:auto;margin-top:10px}.evidence-matrix{width:100%;border-collapse:collapse;min-width:760px;font-size:11px}.evidence-matrix th,.evidence-matrix td{padding:10px;border:1px solid var(--line2);text-align:left;vertical-align:top;line-height:1.5}.evidence-matrix thead th{color:var(--green);font:10px 'DM Mono',monospace}.evidence-matrix tbody th{width:150px;color:var(--text);white-space:nowrap}.evidence-matrix td{color:var(--muted)}
+.matrix-legend{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 4px}.matrix-legend .evidence-pill{margin:0}.evidence-pill{display:inline-flex;border-radius:12px;padding:3px 7px;margin-bottom:5px;font:9px 'DM Mono',monospace;letter-spacing:.02em}.evidence-pill.supported{color:var(--green);background:color-mix(in srgb,var(--green) 14%,transparent)}.evidence-pill.proxy{color:var(--lime);background:color-mix(in srgb,var(--lime) 12%,transparent)}.evidence-pill.unknown{color:var(--amber);background:color-mix(in srgb,var(--sand) 15%,transparent)}.evidence-pill.fail{color:var(--red);background:color-mix(in srgb,var(--red) 12%,transparent)}.evidence-matrix td div{max-width:300px}.charttitle{font:700 12px Manrope,sans-serif;color:var(--text);margin:16px 0 4px}.temphead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:10px}.temphead .charttitle{margin-top:8px}.tempchart{max-height:185px}.tempstats{grid-template-columns:repeat(2,1fr)}
+@media(max-width:760px){.activity-row{grid-template-columns:1fr 1fr}.activity-row .crop-field{grid-column:1/-1}.activity-row .remove{grid-column:2}.rotations{grid-template-columns:1fr}}
+</style><link rel="stylesheet" href="./src/farmer-mode.css"></head><body data-mode="farmer"><div class="app"><aside class="sidebar"><div class="brand"><span class="mark">🌾</span>RotaShift</div><div class="navlabel">Workspace</div><nav class="nav"><a href="#overview" class="active"><i>▦</i>Overview</a><a href="#field"><i>◱</i>Farmer profile</a><a href="#shift"><i>⌁</i>Climate data</a><a href="#rotations"><i>☷</i>Rotation comparison</a><a href="#sim">◇ Adaptation margin</a><a href="#methods"><i>⌖</i>Evidence</a></nav><div class="sidebottom"><div class="region"><span class="mono" style="font-size:9px;letter-spacing:1px;color:var(--faint)">REGIONAL EXAMPLE</span><b>Barind · Northwest Bangladesh</b><span>NASA POWER regional point · 24.37°N, 88.60°E</span></div><div class="profile">◉ Space Apps 2026 · Independent project<br>Not endorsed by NASA</div></div></aside>
+<main class="main"><div class="topbar"><span class="mode-switch" role="group" aria-label="Application mode"><button id="farmerMode" class="mode-button selected" type="button" data-i18n="modeFarmer">Farmer mode</button><button id="evidenceMode" class="mode-button" type="button" data-i18n="modeEvidence">Evidence mode</button></span><span class="language-switch" role="group" aria-label="Language"><span data-i18n="language">Language</span><button id="langEn" class="mode-button selected" type="button">English</button><button id="langBn" class="mode-button" type="button">বাংলা</button></span><button id="themeToggle" class="mode-button theme-toggle" type="button" aria-label="Switch theme">Dark mode</button><span class="demo">● WORKING MVP · EVIDENCE-LIMITED</span></div>
+<section id="overview" class="hero rv"><div><div class="eyebrow">NASA Space Apps 2026 · Adapting Farms with NASA Data</div><h1 data-i18n="title">Plan your crop season</h1><p data-i18n="intro">Add your crops and dates. RotaShift checks the calendar and shows what is known and what still needs checking.</p></div><div class="heroside"><span class="tag">BARIND · REGIONAL EXAMPLE</span><a class="cta" href="#field"><span data-i18n="setup">Your farm</span> <span>↓</span></a></div></section>
+<div class="alert rv"><span class="alerticon">↗</span><div class="alertcopy"><b>NASA POWER regional climate data are summarized descriptively; no climate trend is asserted.</b><br>Rainfall and temperature values come from a gridded MERRA-2 reanalysis, not a farm weather station. Summaries do not establish crop water sufficiency or crop-stage stress.</div><span class="alertstat" id="dataBadge">LOADING DATA</span></div>
+<section class="card fieldcard rv" id="field" style="margin-top:0"><div class="cardhead"><div><h2>Your farm and crops</h2><p class="sub">Your entries stay in this browser. They are information you provide, not a soil-lab record.</p></div><span class="tag">PROFILE</span></div><div class="fields"><div class="fi"><label for="farmerName">Name (optional)</label><input id="farmerName" placeholder="Your name"></div><div class="fi"><label for="regionInput">Where is your farm?</label><select id="regionInput"><option value="barind">Barind · Northwest Bangladesh</option></select></div><div class="fi"><label for="landClass">Field type (optional)</label><select id="landClass"><option value="">Not provided</option><option value="high">High land</option><option value="medium_high">Medium-high land</option><option value="other">Other / unsure</option></select></div><div class="fi"><label for="soilNotes">Soil information (optional)</label><input id="soilNotes" placeholder="Optional farmer note (not lab data)"></div><div class="fi"><label for="irrigation">Can you irrigate?</label><select id="irrigation"><option value="unknown">Not sure / not provided</option><option value="none">No access</option><option value="limited">Limited</option><option value="reliable">Reliable access</option></select></div></div><div style="margin-top:18px"><div class="rotationhead"><div><h3>What do you grow now?</h3><p class="sub">Enter each crop's sowing/transplant dates. Add an actual harvest date when known to resolve possible field overlap.</p></div><button class="pb" id="addActivity" type="button">＋ Add crop</button></div><div id="currentSchedule" class="schedule"></div><div id="profileStatus" class="youare" aria-live="polite"></div></div><div class="farmer-priorities"><h3 data-i18n="prioritiesTitle">What matters most to you?</h3><p class="sub" data-i18n="priorityHint">These choices are saved as your priorities. They do not create crop scores when evidence is missing.</p><div class="priorities" id="farmerPriorityControls"></div></div></section>
+<section class="card farmer-only farmer-climate rv" id="farmerClimate"><div class="cardhead"><div><h2 data-i18n="climateTitle">Recent weather information</h2><p class="sub" data-i18n="climateHint">Regional NASA estimates help describe the area. They are not a measurement from your farm and do not predict next season.</p></div><a class="text-link" href="#shift" data-i18n="viewEvidence">View evidence</a></div><div class="farmer-climate-grid" id="farmerClimateStats" aria-live="polite"></div><p class="sub" id="farmerClimateFoot"></p></section>
+<section class="card farmer-only rv" id="farmerRotationsSection"><div class="cardhead"><div><h2 data-i18n="rotationsTitle">Compare crop sequences</h2><p class="sub" data-i18n="rotationsHint">These examples are checked by the calendar rules. They are not recommendations.</p></div></div><p class="cycle-note" id="analysisCycleText" data-i18n="cycleHint">All three scenarios use the same 12-month example cycle: 1 October–30 September. Crop dates are aligned by month and day for comparison. Unoccupied time does not mean bare soil; cover is unknown.</p><div id="farmerPriorityFocus" class="priority-focus" aria-live="polite"></div><div id="farmerRotations" class="farmer-rotations"></div><div class="legalbox" id="farmerNoRecommendation"></div><details class="more-evidence"><summary><span data-i18n="evidenceLink">Open scientific details</span></summary><a href="#methods" data-i18n="viewEvidence">View evidence</a></details></section>
+<section class="card farmer-only rv" id="farmerNext"><div class="cardhead"><div><h2 data-i18n="nextTitle">What would make this comparison clearer?</h2><p class="sub" data-i18n="nextIntro">A few details can help check whether crops fit your field and timing:</p></div></div><ul id="nextSteps" class="next-steps"></ul></section><section class="grid rv evidence-only" id="shift" style="margin-top:15px"><div class="card"><div class="cardhead"><div><h2>NASA POWER regional climate record</h2><p class="sub">Barind representative point · daily series <span id="rainPeriod">1998–2025</span></p></div><span class="tag">MERRA-2 · REANALYSIS</span></div><h3 class="charttitle">Annual precipitation total</h3><svg class="chart" id="rainChart" viewBox="0 0 700 252" role="img" aria-label="Annual precipitation totals from NASA POWER MERRA-2 gridded climate data"></svg><div class="stats" id="rainStats"></div><div class="temphead"><div><h3 class="charttitle">Air-temperature context</h3><p class="sub">Annual mean of daily maximum and minimum · °C · descriptive only, no trend test</p></div><span class="tag">T2M_MAX · T2M_MIN</span></div><svg class="chart tempchart" id="tempChart" viewBox="0 0 700 190" role="img" aria-label="Annual averages of NASA POWER MERRA-2 daily maximum and minimum temperatures"></svg><div class="stats tempstats" id="tempStats"></div><p class="sub" id="rainFootnote" style="margin-top:12px">Daily NASA POWER PRECTOTCORR rainfall and T2M_MAX/T2M_MIN temperature from MERRA-2 gridded reanalysis. Not a farm gauge or station; no trend test or crop-stage stress assessment is shown.</p></div><div class="card"><div class="cardhead"><div><h2>Your priorities</h2><p class="sub">Set relative importance. Ranking is withheld until comparable crop outcome evidence exists.</p></div><span class="tag">FARMER INPUT</span></div><div class="priorities" id="priorityControls"></div><div class="note" id="prioritySummary">Priority weights do not create yield, cost, water, soil, or risk scores.</div></div></section>
+<section class="card rotationcard rv evidence-only" id="rotations"><div class="rotationhead"><div><h2>Rotation comparison</h2><p class="sub">Your schedule plus two source-listed patterns. Candidate dates are illustrative assumptions, not locally validated schedules or recommendations.</p></div><span class="tag" id="rotationStatus">ENGINE</span></div><div id="rotationsList" class="rotations"></div><div id="rankingNote" class="legalbox"></div><div class="cardhead" style="margin-top:18px"><div><h3>Evidence side by side</h3><p class="sub">Each row shows what the sources and current inputs can support. Unknowns remain explicit.</p></div><span class="tag">NO SYNTHETIC SCORES</span></div><div id="evidenceMatrix"></div></section>
+<section class="card sim rv" id="sim"><div class="cardhead"><div><h2>Calendar-based Adaptation Margin</h2><p class="sub">Shift the entered/template schedule earlier or later. The engine checks crop dates against documented calendar windows.</p></div><span class="tag">SCENARIO · NOT A CLIMATE FORECAST</span></div><div class="fields"><div class="fi"><label for="simRotation">Schedule to simulate</label><select id="simRotation"></select></div></div><div class="simlayout" style="margin-top:14px"><div><input type="range" class="simrange" id="simr" min="-35" max="35" value="0" step="1" aria-label="Shift the schedule earlier or later by days"><div class="scale"><span>35 days later ←</span><span>Baseline</span><span>→ 35 days earlier</span></div><div id="simFailure" class="youare" aria-live="polite"></div></div><div><div class="mono" style="font-size:9px;letter-spacing:1.1px;color:var(--faint)">SCHEDULE SHIFT</div><div class="simval" id="simval">0 days</div><div class="simnote" id="simMargin"></div></div></div><p class="sub" style="margin-top:12px">To extend this beyond calendar dates, we need crop-stage dates and validated temperature stress thresholds, plus crop water demand, field soil water-holding conditions, and irrigation volume/reliability. NASA daily rain and temperature alone cannot establish either constraint.</p></section>
+<section class="card methods rv evidence-only" id="methods"><div class="cardhead"><div><h2>Evidence &amp; uncertainty</h2><p class="sub">Observed data, local crop references, farmer inputs, and model checks are kept separate.</p></div><span class="tag">TRANSPARENT BY DESIGN</span></div><div class="meth"><div class="me"><h3>NASA observation</h3><p id="nasaEvidence">Loading verified local POWER file…</p><span class="bdg obs">PRECIPITATION · OBSERVATION</span></div><div class="me"><h3>Local crop information</h3><p>BRRI/BAMIS/BARI calendars define some crop windows and durations. They do not verify field suitability, outcome, or a farmer's current practice.</p><span class="bdg ctx">SOURCE-DOCUMENTED · PARTIAL</span></div><div class="me"><h3>Farmer inputs</h3><p>Schedule, land class, irrigation access, soil notes, and priorities are entered by the user. They are not independently verified.</p><span class="bdg ctx">USER-ENTERED</span></div><div class="me"><h3>Model &amp; missing evidence</h3><p>Hard checks use documented planting/transplanting windows, seedling age, duration overlap, and explicit irrigation dependence. Unknown crop water demand, field soil, yield, cost, and hazard thresholds remain unresolved.</p><span class="bdg no">NO SYNTHETIC SCORE</span></div></div><div class="legalbox"><b>Not a crop recommendation.</b> Calendar fit is only one part of feasibility. The app does not predict yield, calculate field water balance, or infer soil-health improvement. NASA data are not a NASA endorsement.</div></section><div class="footer"><span>ROTASHIFT · NASA SPACE APPS 2026</span><span>Local working prototype · no forecast · no fabricated agronomic scores</span></div></main></div><div id="toast" role="status"></div><div class="alert" id="moduleFallback" hidden style="position:fixed;z-index:100;left:50%;bottom:18px;transform:translateX(-50%);max-width:min(720px,calc(100vw - 28px));box-shadow:var(--lift)"><span class="alerticon">!</span><div class="alertcopy"><b>The app data did not load.</b><br>Run a local server from the RotaShift project folder: <code>python -m http.server 8000</code>, then open <code>http://localhost:8000/rotashift.html</code>. Don’t open this page directly as a <code>file://</code> URL.</div></div><script>setTimeout(()=>{if(!document.documentElement.dataset.rotashiftReady){document.getElementById('moduleFallback').hidden=false}},1800)</script><script type="module" src="./src/app.js"></script></body></html>

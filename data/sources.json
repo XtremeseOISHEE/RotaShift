@@ -1,0 +1,115 @@
+{
+  "brri_dhan66": {
+    "title": "BRRI dhan66 variety profile",
+    "organization": "Bangladesh Rice Research Institute",
+    "url": "https://riceprofile.brri.gov.bd/varieties/75",
+    "supports": [
+      "Aman season",
+      "sowing window 5–14 July",
+      "transplanting window 25 July–10 August",
+      "20–25 day seedling age",
+      "115-day life span",
+      "rainfed with supplemental irrigation when rainfall is insufficient",
+      "drought tolerance claim",
+      "high and medium-high land suitability",
+      "BRRI-listed cropping patterns"
+    ],
+    "limits": "Cultivar profile values do not establish the exact schedule or soil condition on a farmer's field."
+  },
+  "brri_dhan64": {
+    "title": "BRRI dhan64 variety profile",
+    "organization": "Bangladesh Rice Research Institute",
+    "url": "https://riceprofile.brri.gov.bd/varieties/73",
+    "supports": [
+      "Boro season",
+      "sowing window 15–29 November",
+      "transplanting window 20 December–10 January",
+      "35–40 day seedling age",
+      "152-day life span",
+      "irrigation-dependent",
+      "high and medium-high land suitability"
+    ],
+    "limits": "Variety profile values do not quantify seasonal irrigation volume or field water balance."
+  },
+  "bamis_mustard_rajshahi": {
+    "title": "Mustard crop weather calendar, Rajshahi region",
+    "organization": "Bangladesh Agro-Meteorological Information Service, Department of Agricultural Extension",
+    "url": "https://www.bamis.gov.bd/calendar/1/44/2/",
+    "calendar_pdf": "https://www.bamis.gov.bd/res/public/calendars/2019/12/30/10986.pdf",
+    "supports": [
+      "Rajshahi-region calendar for Rajshahi, Chapainawabganj, Naogaon and Natore",
+      "80–100 day crop duration",
+      "calendar weeks 47–8",
+      "seasonal weather context"
+    ],
+    "limits": "Generic calendar, not cultivar-specific; weeks describe calendar context and do not define a precise sowing date."
+  },
+  "bamis_mustard_sowing": {
+    "title": "BAMIS agrometeorological advisory for Rangpur District: mustard sowing advice",
+    "organization": "Bangladesh Agro-Meteorological Information Service, Department of Agricultural Extension",
+    "url": "https://www.bamis.gov.bd/res/bulletins/2020/10/15/22451.pdf",
+    "supports": [
+      "mid-October to mid-November sowing period in a dated Rangpur district advisory"
+    ],
+    "limits": "District-specific dated advisory; not a Rajshahi or Barind validated hard planting window. Stored as contextual advice only."
+  },
+  "bamis_mustard_irrigation": {
+    "title": "BAMIS agromet advisories: mustard irrigation timing",
+    "organization": "Bangladesh Agro-Meteorological Information Service, Department of Agricultural Extension",
+    "url": "https://www.bamis.gov.bd/res/bulletins/2020/01/25/12463.pdf",
+    "supports": [
+      "advisory irrigation timing around 20–25 and 50–55 days after sowing"
+    ],
+    "limits": "Dated agromet advisory, not measured seasonal crop water requirement or field-specific irrigation prescription."
+  },
+  "bamis_green_gram_rajshahi": {
+    "title": "Green Gram (Kharif-I) crop weather calendar, Rajshahi",
+    "organization": "Bangladesh Agro-Meteorological Information Service, Department of Agricultural Extension",
+    "url": "https://www.bamis.gov.bd/calendar/1/86/2/",
+    "supports": [
+      "Kharif-I green gram calendar exists for Rajshahi"
+    ],
+    "limits": "This does not prove widespread adoption; BAMIS district major-crop data lists Green Gram as not a major Rajshahi crop."
+  },
+  "mungbean_kharif1_guide": {
+    "title": "Technical Guideline for Kharif-I Mungbean",
+    "organization": "FAO / Bangladesh Kharif-I technical guideline",
+    "url": "https://www.fao.org/climatechange/20612-0446c5eb2511442ea444c96c445806165.pdf",
+    "supports": [
+      "Kharif-I sowing period from late February to mid-March",
+      "BARI Mung-5 and BARI Mung-6 are varieties in the guide"
+    ],
+    "limits": "General Bangladesh guidance; not a Barind-specific validated optimum."
+  },
+  "bari_mung6_maturity": {
+    "title": "BARI Annual Report 2013–14, mungbean trial table",
+    "organization": "Bangladesh Agricultural Research Institute",
+    "url": "https://bari.gov.bd/sites/default/files/files/bari.portal.gov.bd/annual_reports/9f0392ab_224e_4673_a91b_fbe7b16b2d20/annual_report.pdf",
+    "supports": [
+      "BARI Mung-6 reported 56 days to maturity in a Kharif-I trial at Ishurdi, Pabna"
+    ],
+    "limits": "One trial result; catalog widens to 55–60 days as an explicit range and flags regional uncertainty."
+  },
+  "brri_pattern": {
+    "title": "BRRI dhan66 profile cropping-pattern list",
+    "organization": "Bangladesh Rice Research Institute",
+    "url": "https://riceprofile.brri.gov.bd/varieties/75",
+    "supports": [
+      "Boro–fallow–transplanted Aman",
+      "fallow–fallow–transplanted Aman",
+      "mustard–Boro–transplanted Aman are listed patterns"
+    ],
+    "limits": "A source-listed pattern is not a farmer's current practice and does not prove physical feasibility for a particular field or planting date."
+  },
+  "bamis_boro_rajshahi": {
+    "title": "Boro rice crop weather calendar, Rajshahi region",
+    "organization": "Bangladesh Agro-Meteorological Information Service, Department of Agricultural Extension",
+    "url": "https://www.bamis.gov.bd/res/calendars/2019/08/23/5105.pdf",
+    "supports": [
+      "Rajshahi, Chapainawabganj, Naogaon and Natore regional calendar",
+      "150–155 day duration",
+      "normal phase-wise water-requirement entries of 76, 120, 190, 145 and 100 mm"
+    ],
+    "limits": "Regional calendar values are not a dhan64-, field-, soil-, effective-rainfall-, or irrigation-supply-specific water balance and are not used as a hard constraint or water score."
+  }
+}

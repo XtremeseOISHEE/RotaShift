@@ -1,0 +1,20 @@
+# Local credentials and environment configuration
+.env
+.env.*
+!.env.example
+
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node dependencies
+node_modules/
+
+# Local server/debug logs
+*.log
+
+# Operating-system artifacts
+.DS_Store
+Thumbs.db
